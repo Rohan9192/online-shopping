@@ -1,0 +1,118 @@
+/* Category Hero */
+.category-hero {
+  padding: var(--space-3xl) 0;
+  text-align: center;
+  color: var(--color-white);
+}
+.category-hero--tshirts { background: linear-gradient(135deg, #1a1a1a, #333); }
+.category-hero--jeans { background: linear-gradient(135deg, #2c3e6b, #1a237e); }
+.category-hero--new { background: linear-gradient(135deg, #3d3025, #1a1210); }
+.category-hero--sale { background: linear-gradient(135deg, #8b1a1a, #4a0e0e); }
+
+/* T-shirt sub-categories */
+.category-hero--waffle { background: linear-gradient(135deg, #4a3728, #2a1f18); }
+.category-hero--drsleeves { background: linear-gradient(135deg, #1a1a2e, #0d0d1a); }
+.category-hero--raglan { background: linear-gradient(135deg, #2c3025, #1a1f10); }
+.category-hero--ringer { background: linear-gradient(135deg, #3d3025, #2a1f18); }
+.category-hero--crewneck { background: linear-gradient(135deg, #2a2a2a, #1a1a1a); }
+.category-hero--oversized { background: linear-gradient(135deg, #1f2a1f, #0d1a0d); }
+.category-hero--crop { background: linear-gradient(135deg, #3d2a25, #2a1510); }
+.category-hero--polo { background: linear-gradient(135deg, #2a2a3d, #1a1a2a); }
+.category-hero--zipper { background: linear-gradient(135deg, #2a3d25, #1a2a10); }
+.category-hero--boxy { background: linear-gradient(135deg, #3a3a3a, #222); }
+.category-hero--tanktop { background: linear-gradient(135deg, #3d3525, #2a2010); }
+
+.category-hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 900;
+  color: var(--color-white);
+  margin-bottom: var(--space-sm);
+}
+.category-hero__desc {
+  font-size: 16px;
+  color: rgba(255,255,255,0.65);
+}
+
+/* Promo Strip */
+.category-promo {
+  background: var(--color-accent);
+  color: var(--color-white);
+  text-align: center;
+  padding: 12px 0;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Category Header */
+.category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-xl) 0;
+}
+.category-results {
+  font-size: 14px;
+  color: var(--color-gray);
+}
+
+/* Category Empty */
+.category-empty {
+  text-align: center;
+  padding: var(--space-4xl) 0;
+}
+.category-empty h1 {
+  font-size: 24px;
+  margin-bottom: var(--space-md);
+}
+.category-empty p {
+  color: var(--color-gray);
+}
+
+/* Offers Promos */
+.offers-promos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+}
+.offer-promo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  padding: var(--space-xl);
+  border-radius: var(--radius-lg);
+  color: var(--color-white);
+}
+.offer-promo--tshirts { background: linear-gradient(135deg, #1a1a1a, #333); }
+.offer-promo--jeans { background: linear-gradient(135deg, #2c3e6b, #1a237e); }
+.offer-promo__emoji { font-size: 36px; }
+.offer-promo h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: 4px;
+}
+.offer-promo p {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .category-hero {
+    padding: var(--space-2xl) 0;
+  }
+  .offers-promos {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 430px) {
+  .offer-promo {
+    padding: var(--space-md);
+  }
+}

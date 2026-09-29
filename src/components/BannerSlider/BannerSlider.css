@@ -1,0 +1,156 @@
+/* ---------- BannerSlider.css ---------- */
+.banner-slider {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px; /* More rounded premium feel */
+  margin: var(--space-4xl) 0;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); /* Soft premium shadow */
+}
+
+/* Wrapper for all slides (flex for horizontal scroll) */
+.slides-wrapper {
+  display: flex;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Individual slide */
+.slide {
+  min-width: 100%;
+  height: 500px;               /* Larger height for impact */
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--space-4xl);
+  opacity: 0;
+  transition: opacity 1s ease-in-out, transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+  transform: scale(1.05); /* Slight zoom-in initially */
+}
+
+/* Visible slide */
+.slide.active {
+  opacity: 1;
+  transform: scale(1); /* Smooth zoom-out effect when active */
+}
+
+/* Beautiful dark gradient overlay to ensure text is readable */
+.slide-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%);
+  z-index: 1;
+}
+
+/* Glassmorphism Text overlay */
+.slide-content {
+  position: relative;
+  z-index: 2;
+  background: rgba(25, 25, 25, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--space-2xl);
+  border-radius: var(--radius-lg);
+  color: var(--color-white);
+  max-width: 550px;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.3s; /* Delay for nice entry */
+}
+
+.slide.active .slide-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Title */
+.slide-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: var(--space-md);
+  text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Subtitle */
+.slide-subtitle {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: var(--space-lg);
+  line-height: 1.5;
+}
+
+/* Call‑to‑action button */
+.slide-cta {
+  display: inline-block;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.slide-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+}
+
+/* Navigation dots with progress indicator */
+.slider-dots {
+  position: absolute;
+  bottom: var(--space-xl);
+  left: var(--space-4xl); /* Align with content instead of center */
+  display: flex;
+  gap: var(--space-md);
+  z-index: 3;
+}
+
+.slider-dots .dot {
+  width: 40px; /* Wider dots for progress bar effect */
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.slider-dots .dot-progress {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 0%;
+  background: var(--color-white);
+  border-radius: 4px;
+}
+
+/* Progress animation for the active dot */
+.slider-dots .dot.active .dot-progress {
+  animation: progress 6s linear forwards; /* Matches the 6000ms interval */
+}
+
+@keyframes progress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+/* Small‑screen tweaks */
+@media (max-width: 768px) {
+  .slide {
+    height: 400px;
+    padding: var(--space-xl);
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .slide-overlay {
+    background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 100%);
+  }
+
+  .slider-dots {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+

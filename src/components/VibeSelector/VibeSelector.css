@@ -1,0 +1,95 @@
+/* ========= Vibe Selector ========= */
+.vibe-selector {
+  margin: var(--space-4xl) auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.section-subtitle {
+  font-size: 16px;
+  color: var(--color-gray);
+  margin-top: -12px;
+  margin-bottom: var(--space-xl);
+}
+
+.vibe-pills-wrapper {
+  margin-bottom: var(--space-2xl);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: var(--space-sm);
+}
+
+.vibe-pills-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.vibe-pills {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  min-width: max-content;
+  padding: 0 var(--space-md);
+}
+
+.vibe-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  padding: 12px 24px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--color-gray);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vibe-pill:hover {
+  border-color: var(--color-black);
+  color: var(--color-black);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.vibe-pill.active {
+  background: var(--color-black);
+  border-color: var(--color-black);
+  color: var(--color-white);
+}
+
+.vibe-results {
+  min-height: 400px;
+}
+
+.vibe-result-anim {
+  animation: vibeFadeIn 0.5s ease forwards;
+}
+
+@keyframes vibeFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .vibe-pills {
+    justify-content: flex-start;
+  }
+}

@@ -1,0 +1,97 @@
+/* ========= Home Page Styles ========= */
+/* The old Hero styles have been moved to HeroSlideshow component */
+
+/* ========= Section Titles ========= */
+.section-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-xl);
+}
+.section-link {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-accent);
+  transition: color var(--transition-fast);
+}
+.section-link:hover {
+  color: var(--color-accent-hover);
+}
+
+/* ========= Product Grid ========= */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+}
+.product-section {
+  margin-bottom: var(--space-3xl);
+}
+
+/* ========= Features ========= */
+.features {
+  margin-bottom: 0;
+  padding-bottom: var(--space-3xl);
+}
+.features__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+}
+.feature {
+  text-align: center;
+  padding: var(--space-xl);
+  border-radius: var(--radius-lg);
+  background: var(--color-off-white);
+  transition: transform var(--transition-base);
+}
+.feature:hover {
+  transform: translateY(-4px);
+}
+.feature__icon {
+  font-size: 28px;
+  margin-bottom: var(--space-md);
+}
+.feature__title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+}
+.feature__desc {
+  font-size: 13px;
+  color: var(--color-gray);
+}
+
+/* ========= Responsive ========= */
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+  .features__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 430px) {
+  .section-title {
+    font-size: 22px;
+  }
+}

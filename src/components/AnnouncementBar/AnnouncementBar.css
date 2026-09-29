@@ -1,0 +1,31 @@
+.announcement-bar {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  padding: 10px 0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+.announcement-bar p {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.announcement-bar--warning {
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
+.announcement-bar--success {
+  background-color: #4caf50;
+  color: #fff;
+}
