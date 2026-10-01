@@ -5,6 +5,7 @@ import HeroSlideshow from '../../components/HeroSlideshow/HeroSlideshow';
 import CategoryGrid from '../../components/CategoryGrid/CategoryGrid';
 import StyleSection from '../../components/StyleSection/StyleSection';
 import PromoBanner from '../../components/PromoBanner/PromoBanner';
+import TShirtDealSection from '../../components/TShirtDealSection/TShirtDealSection';
 import VibeSelector from '../../components/VibeSelector/VibeSelector';
 import FindMyFit from '../../components/FindMyFit/FindMyFit';
 import DropSection from '../../components/DropSection/DropSection';
@@ -46,6 +47,15 @@ export default function Home() {
     <div className="home page-enter">
       {/* ===== 1. HERO CATEGORY SLIDESHOW ===== */}
       <HeroSlideshow />
+
+      {/* ===== 2. 3 T-SHIRTS FOR ₹500 PROMO ===== */}
+      <PromoBanner onBuildPackClick={() => {
+        const el = document.getElementById('tshirt-deal-section');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }} />
+
+      {/* ===== 3. T-SHIRT DEAL SECTION ===== */}
+      <TShirtDealSection tshirts={tshirts} />
 
       {/* ===== 4. WHAT'S YOUR VIBE? ===== */}
       <VibeSelector />

@@ -59,6 +59,9 @@ export default function ProductCard({ product }) {
           />
           {/* Badges */}
           <div className="product-card__badges">
+            {product.category === 'tshirts' && (
+              <span className="product-card__badge product-card__badge--promo">3 FOR ₹500</span>
+            )}
             {product.badge && (
               <span className="product-card__badge">{product.badge}</span>
             )}

@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { tshirtCategories, womensCategories } from '../../data/categories';
+import { tshirtCategories, womensCategories, mensPantsCategories, womensPantsCategories, mensShirtsCategories, womensShirtsCategories } from '../../data/categories';
 import { useCollection } from '../../context/CollectionContext';
+import { useClothingType } from '../../context/ClothingTypeContext';
 import './HeroSlideshow.css';
 
 export default function HeroSlideshow() {
@@ -13,9 +14,26 @@ export default function HeroSlideshow() {
   const intervalRef = useRef(null);
   const categoryNavRef = useRef(null);
   const { collection } = useCollection();
+  const { clothingType, setClothingType } = useClothingType();
 
-  const activeCategories = collection === 'WOMEN' ? womensCategories : tshirtCategories;
+  // Determine active categories based on collection + clothingType
+  const getActiveCategories = () => {
+    if (clothingType === 'PANTS') {
+      return collection === 'WOMEN' ? womensPantsCategories : mensPantsCategories;
+    }
+    if (clothingType === 'SHIRTS') {
+      return collection === 'WOMEN' ? womensShirtsCategories : mensShirtsCategories;
+    }
+    return collection === 'WOMEN' ? womensCategories : tshirtCategories;
+  };
+
+  const activeCategories = getActiveCategories();
   const totalSlides = activeCategories.length;
+
+  // Reset slide index when categories change
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [collection, clothingType]);
 
   const goToSlide = useCallback((index) => {
     if (isTransitioning) return;
@@ -60,7 +78,7 @@ export default function HeroSlideshow() {
         container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
       }
     }
-  }, [activeIndex, collection]);
+  }, [activeIndex, collection, clothingType]);
 
   // Touch swipe
   const minSwipeDistance = 50;
@@ -85,6 +103,10 @@ export default function HeroSlideshow() {
 
   // Preload first image eagerly
   const currentCategory = activeCategories[activeIndex] || activeCategories[0];
+  const categoryLabels = { TSHIRTS: 'NEW COLLECTION', PANTS: 'PANTS COLLECTION', SHIRTS: 'SHIRTS COLLECTION' };
+  const altSuffixes = { TSHIRTS: 'T-shirt collection', PANTS: 'pants collection', SHIRTS: 'shirt collection' };
+  const categoryLabel = categoryLabels[clothingType] || 'NEW COLLECTION';
+  const altSuffix = altSuffixes[clothingType] || 'collection';
 
   return (
     <section
@@ -98,6 +120,42 @@ export default function HeroSlideshow() {
       aria-label="Category hero slideshow"
       role="region"
     >
+      {/* Clothing Type Switcher */}
+      <div className="clothing-type-switcher" id="clothing-type-switcher">
+        <button
+          className={`clothing-type-btn ${clothingType === 'TSHIRTS' ? 'active' : ''}`}
+          onClick={() => setClothingType('TSHIRTS')}
+          id="clothing-type-tshirts"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.47a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.47a2 2 0 00-1.34-2.23z"/>
+          </svg>
+          T-SHIRTS
+        </button>
+        <button
+          className={`clothing-type-btn ${clothingType === 'SHIRTS' ? 'active' : ''}`}
+          onClick={() => setClothingType('SHIRTS')}
+          id="clothing-type-shirts"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 3l-4 1-5-2-5 2-4-1v5l3 2v11h12V10l3-2V3z"/>
+            <path d="M12 2v4"/>
+          </svg>
+          SHIRTS
+        </button>
+        <button
+          className={`clothing-type-btn ${clothingType === 'PANTS' ? 'active' : ''}`}
+          onClick={() => setClothingType('PANTS')}
+          id="clothing-type-pants"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 2h16v6l-3 14H7L4 8V2z"/>
+            <line x1="12" y1="2" x2="12" y2="22"/>
+          </svg>
+          PANTS
+        </button>
+      </div>
+
       {/* Slides */}
       <div className="hero-slideshow__slides">
         {activeCategories.map((cat, idx) => (
@@ -121,7 +179,7 @@ export default function HeroSlideshow() {
                     </div>
                   </div>
 
-                  <span className="hero-slide__label">NEW COLLECTION</span>
+                  <span className="hero-slide__label">{categoryLabel}</span>
                   <h1 className="hero-slide__title">{cat.name}</h1>
                   <p className="hero-slide__tagline">{cat.tagline}</p>
                   <p className="hero-slide__desc">{cat.description}</p>
@@ -146,7 +204,7 @@ export default function HeroSlideshow() {
                 <div className="hero-slide__img-wrapper">
                   <img
                     src={cat.heroImage}
-                    alt={`${cat.name} T-shirt collection`}
+                    alt={`${cat.name} ${altSuffix}`}
                     className="hero-slide__img"
                     loading={idx === 0 ? 'eager' : 'lazy'}
                     fetchPriority={idx === 0 ? 'high' : 'auto'}

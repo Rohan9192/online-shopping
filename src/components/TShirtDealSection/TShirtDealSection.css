@@ -1,0 +1,192 @@
+/* ========= T-Shirt Deal Section ========= */
+.tshirt-deal-section {
+  padding: var(--space-2xl) 0;
+  position: relative;
+}
+
+.tshirt-deal__header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.tshirt-deal__title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 4vw, 42px);
+  font-weight: 900;
+  color: #ff3366;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.tshirt-deal__subtitle {
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.tshirt-deal__card-wrapper {
+  position: relative;
+}
+
+.tshirt-deal__select-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
+.tshirt-deal__select-btn {
+  background: #111;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 8px 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: all 0.2s;
+}
+
+.tshirt-deal__select-btn:hover:not(:disabled) {
+  background: #ff3366;
+  border-color: #ff3366;
+  transform: translateY(-2px);
+}
+
+.tshirt-deal__select-btn:disabled {
+  background: rgba(0,0,0,0.5);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.tshirt-deal__footer {
+  text-align: center;
+  margin-top: var(--space-xl);
+}
+
+/* Builder Progress Bar Sticky Bottom */
+.tshirt-deal__progress-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #111;
+  color: #fff;
+  z-index: 1000;
+  padding: var(--space-md) 0;
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.3);
+  border-top: 1px solid rgba(255,51,102,0.3);
+}
+
+.tshirt-deal__progress-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.tshirt-deal__progress-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.tshirt-deal__slots {
+  display: flex;
+  gap: 12px;
+}
+
+.tshirt-deal__slot {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  border: 2px dashed rgba(255,255,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tshirt-deal__slot:hover {
+  border-color: rgba(255,255,255,0.6);
+}
+
+.tshirt-deal__slot.filled {
+  border: 2px solid #ff3366;
+  border-style: solid;
+}
+
+.tshirt-deal__slot-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.tshirt-deal__slot-empty {
+  font-size: 24px;
+  color: rgba(255,255,255,0.3);
+}
+
+.tshirt-deal__slot-remove {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff3366;
+  color: #fff;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.tshirt-deal__slot:hover .tshirt-deal__slot-remove {
+  opacity: 1;
+}
+
+.tshirt-deal__status-text h3 {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.tshirt-deal__price-calc {
+  color: #ff3366;
+  font-weight: 700;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.btn-disabled {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.3);
+  cursor: not-allowed;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .tshirt-deal__progress-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .tshirt-deal__progress-status {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  .tshirt-deal__slot {
+    width: 50px;
+    height: 50px;
+  }
+  .tshirt-deal__progress-inner .btn-lg {
+    width: 100%;
+  }
+}

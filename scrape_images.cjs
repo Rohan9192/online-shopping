@@ -1,93 +1,71 @@
-const puppeteer = require('puppeteer');
 const fs = require('fs');
-const https = require('https');
 const path = require('path');
+const https = require('https');
+const http = require('http');
+const { searchImages } = require('duck-duck-scrape');
 
-const categories = [
-  { slug: 'womens_waffle', q: 'woman waffle shirt' },
-  { slug: 'womens_drsleeves', q: 'woman long sleeve t-shirt' },
-  { slug: 'womens_raglan', q: 'woman baseball t-shirt' },
-  { slug: 'womens_ringer', q: 'woman ringer t-shirt' },
-  { slug: 'womens_crewneck', q: 'woman crew neck t-shirt' },
-  { slug: 'womens_oversized', q: 'woman oversized t-shirt' },
-  { slug: 'womens_crop', q: 'woman crop top' },
-  { slug: 'womens_polo', q: 'woman polo shirt' },
-  { slug: 'womens_zipper', q: 'woman half zip shirt' },
-  { slug: 'womens_boxy', q: 'woman boxy t-shirt' },
-  { slug: 'womens_tanktop', q: 'woman tank top' }
+const outputDir = path.join(__dirname, 'public', 'images', 'heroes');
+
+const queries = [
+  { file: 'women-shirt-linen.jpg', q: 'female fashion model wearing natural linen shirt studio high resolution' },
+  { file: 'women-shirt-striped.jpg', q: 'female fashion model wearing vertical striped shirt high resolution' },
+  { file: 'women-shirt-oxford.jpg', q: 'female fashion model wearing oxford button down shirt high resolution' },
+  { file: 'women-shirt-classic.jpg', q: 'female fashion model wearing classic white dress shirt high resolution' },
+  { file: 'women-shirt-cuban-collar.jpg', q: 'female fashion model wearing cuban collar camp shirt high resolution' }
 ];
 
 function downloadImage(url, filepath) {
   return new Promise((resolve, reject) => {
-    // Modify URL for higher resolution if possible (Pexels allows ?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)
-    // We will just fetch exactly what we find or append size
-    let fetchUrl = url;
-    if (url.includes('images.pexels.com')) {
-      fetchUrl = url.split('?')[0] + '?auto=compress&cs=tinysrgb&w=1920';
-    }
-    
-    https.get(fetchUrl, (res) => {
+    const protocol = url.startsWith('https') ? https : http;
+    const req = protocol.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } }, (res) => {
       if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
         return downloadImage(res.headers.location, filepath).then(resolve).catch(reject);
       }
-      
+      if (res.statusCode !== 200) {
+        return reject(new Error(`HTTP ${res.statusCode}`));
+      }
+      // Ensure we're getting an image
+      const contentType = res.headers['content-type'];
+      if (!contentType || !contentType.startsWith('image/')) {
+         return reject(new Error('Not an image'));
+      }
       const fileStream = fs.createWriteStream(filepath);
       res.pipe(fileStream);
       fileStream.on('finish', () => {
         fileStream.close();
         resolve();
       });
-      fileStream.on('error', (err) => {
-        fs.unlink(filepath, () => reject(err));
-      });
     }).on('error', reject);
+    req.on('timeout', () => { req.destroy(); reject(new Error('Timeout')); });
+    req.setTimeout(10000);
   });
 }
 
-async function scrapeImages() {
-  console.log("Launching browser...");
-  const browser = await puppeteer.launch({ headless: 'new' });
-  const page = await browser.newPage();
-  await page.setViewport({ width: 1920, height: 1080 });
-  
-  const outputDir = path.join(__dirname, 'public', 'images', 'heroes');
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-  }
-
-  for (const cat of categories) {
+async function main() {
+  for (const item of queries) {
+    console.log(`Searching for: ${item.file} ("${item.q}")`);
     try {
-      console.log(`Searching Pexels for: ${cat.q}...`);
-      await page.goto(`https://www.pexels.com/search/${encodeURIComponent(cat.q)}/`, { waitUntil: 'domcontentloaded' });
+      const results = await searchImages(item.q);
       
-      // Wait for images to load
-      await page.waitForSelector('img[src*="images.pexels.com/photos/"]', { timeout: 10000 });
-      
-      const imageUrls = await page.evaluate(() => {
-        const imgs = Array.from(document.querySelectorAll('img[src*="images.pexels.com/photos/"]'));
-        return imgs.map(img => img.src);
-      });
-      
-      // Filter out tiny avatars or icons
-      const validUrls = imageUrls.filter(url => !url.includes('h=100') && !url.includes('w=100'));
-      
-      if (validUrls.length > 0) {
-        const imgUrl = validUrls[0];
-        console.log(`Found image: ${imgUrl}`);
-        const filepath = path.join(outputDir, `${cat.slug}.jpg`);
-        await downloadImage(imgUrl, filepath);
-        console.log(`Downloaded ${cat.slug}.jpg`);
-      } else {
-        console.log(`NO IMAGES FOUND FOR ${cat.slug}`);
+      let success = false;
+      for (const res of results.results) {
+        if (success) break;
+        // only grab high-ish res images
+        if (res.width < 1000 || res.height < 600) continue;
+        
+        console.log(`  Trying URL: ${res.image}`);
+        try {
+          await downloadImage(res.image, path.join(outputDir, item.file));
+          console.log(`  ✓ Saved ${item.file} from ${res.image}`);
+          success = true;
+        } catch (e) {
+          console.log(`  ✗ Failed: ${e.message}`);
+        }
       }
-      
-    } catch (err) {
-      console.log(`Error on ${cat.slug}: ${err.message}`);
+    } catch (e) {
+      console.error(e);
     }
   }
-
-  await browser.close();
-  console.log("Finished all downloads.");
 }
 
-scrapeImages().catch(console.error);
+main().catch(console.error);

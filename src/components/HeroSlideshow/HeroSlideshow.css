@@ -9,6 +9,62 @@
   background: var(--color-off-white);
 }
 
+/* ---- Clothing Type Switcher ---- */
+.clothing-type-switcher {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.clothing-type-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-gray);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.clothing-type-btn:hover {
+  color: var(--color-black);
+}
+
+.clothing-type-btn.active {
+  background: var(--color-black);
+  color: var(--color-white);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.clothing-type-btn svg {
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.clothing-type-btn.active svg {
+  opacity: 1;
+}
+
 /* ---- Slides ---- */
 .hero-slideshow__slides {
   position: relative;
@@ -421,5 +477,19 @@
     padding: 10px 8px;
     font-size: 9px;
     letter-spacing: 0.8px;
+  }
+
+  .clothing-type-switcher {
+    top: 12px;
+  }
+  .clothing-type-btn {
+    padding: 8px 16px;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    gap: 5px;
+  }
+  .clothing-type-btn svg {
+    width: 14px;
+    height: 14px;
   }
 }
