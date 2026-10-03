@@ -14,7 +14,7 @@ const slides = [
   {
     id: 2,
     image: '/images/banner-jeans.jpg',
-    title: '⚡ 3 Jeans for ₹1,000 – Limited Time',
+    title: '⚡ ₹1700 FOR 3 JEANS – Limited Time',
     subtitle: 'Premium denim crafted for perfect fit and all-day comfort.',
     cta: '/offers',
     ctaLabel: 'Shop Jeans',

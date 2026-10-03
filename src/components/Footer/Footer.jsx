@@ -1,7 +1,16 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
 
 export default function Footer() {
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    setIsSubscribed(true);
+    setTimeout(() => setIsSubscribed(false), 5000);
+  };
+
   return (
     <footer className="footer" id="footer">
       <div className="container">
@@ -23,23 +32,45 @@ export default function Footer() {
             <Link to="/offers" className="footer__link">Offers</Link>
           </div>
 
-          {/* Help */}
+          {/* Help & Trust */}
           <div className="footer__col">
-            <h4 className="footer__heading">Help</h4>
-            <span className="footer__link">Size Guide</span>
-            <span className="footer__link">Shipping</span>
-            <span className="footer__link">Returns</span>
-            <span className="footer__link">Contact Us</span>
+            <h4 className="footer__heading">Support</h4>
+            <Link to="/policies/shipping" className="footer__link">Shipping Policy</Link>
+            <Link to="/policies/returns" className="footer__link">Returns & Refunds</Link>
+            <Link to="/policies/terms" className="footer__link">Terms of Service</Link>
+            <Link to="/policies/privacy" className="footer__link">Privacy Policy</Link>
           </div>
 
-          {/* Newsletter */}
+          {/* Newsletter / Drop Notifications */}
           <div className="footer__col footer__col--wide">
-            <h4 className="footer__heading">Stay Updated</h4>
-            <p className="footer__newsletter-text">Get exclusive deals and new arrivals straight to your inbox.</p>
-            <div className="footer__newsletter">
-              <input type="email" placeholder="Your email address" className="footer__input" />
-              <button className="btn btn-accent btn-sm">Subscribe</button>
-            </div>
+            <h4 className="footer__heading">New Drop Notifications</h4>
+            <p className="footer__newsletter-text">Never miss a limited drop. Select your preferences below.</p>
+            {isSubscribed ? (
+              <div className="footer__success slide-up-fade" style={{ background: '#ecfdf5', color: '#065f46', padding: '12px', borderRadius: '4px', border: '1px solid #a7f3d0' }}>
+                You're on the list! Keep an eye on your inbox.
+              </div>
+            ) : (
+              <form className="footer__drop-form" onSubmit={handleSubscribe}>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '12px' }}>
+                  <label style={{ fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <input type="checkbox" defaultChecked /> New Collections
+                  </label>
+                  <label style={{ fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <input type="checkbox" defaultChecked /> Restocks
+                  </label>
+                  <label style={{ fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <input type="checkbox" /> Exclusive Offers
+                  </label>
+                </div>
+                <div className="footer__newsletter">
+                  <input type="email" placeholder="Your email address" className="footer__input" required />
+                  <button type="submit" className="btn btn-accent btn-sm">Subscribe</button>
+                </div>
+                <p style={{ fontSize: '11px', color: 'var(--color-gray)', marginTop: '8px' }}>
+                  By subscribing, you agree to our Privacy Policy. You can unsubscribe at any time.
+                </p>
+              </form>
+            )}
           </div>
         </div>
 

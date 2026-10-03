@@ -3,7 +3,7 @@
  * 
  * Rules:
  * - 3 eligible T-Shirts → ₹500 (per group of 3)
- * - 3 eligible Jeans → ₹1,000 (per group of 3)
+ * - 3 eligible Jeans → ₹1,700 (per group of 3)
  * - Remaining items (not in complete groups) are charged at normal prices
  * - Most expensive items are placed into promo groups first (maximizes customer savings)
  * 

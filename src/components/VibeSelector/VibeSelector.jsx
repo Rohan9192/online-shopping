@@ -5,6 +5,7 @@ import { useCollection } from '../../context/CollectionContext';
 import './VibeSelector.css';
 
 const VIBES = [
+  { id: 'all', label: 'ALL', icon: '✨' },
   { id: 'minimal', label: 'MINIMAL', icon: '🖤' },
   { id: 'street', label: 'STREET', icon: '🔥' },
   { id: 'graphic', label: 'GRAPHIC', icon: '🎨' },
@@ -14,43 +15,43 @@ const VIBES = [
   { id: 'summer', label: 'SUMMER', icon: '☀️' }
 ];
 
+/**
+ * Vibe descriptions shown below the title when a vibe is selected.
+ */
+const VIBE_DESCRIPTIONS = {
+  all: 'Explore our entire collection.',
+  minimal: 'Clean silhouettes. Neutral tones. Understated premium style.',
+  street: 'Urban-inspired. Relaxed silhouettes. Contemporary edge.',
+  graphic: 'Bold prints. Statement artwork. Wearable art.',
+  oversized: 'Dropped shoulders. Boxy cuts. Effortlessly cool.',
+  retro: 'Vintage-inspired colours. Classic prints. Timeless appeal.',
+  athletic: 'Sport-inspired cuts. Performance styling. Active energy.',
+  summer: 'Light fabrics. Seasonal colours. Breathable comfort.',
+};
+
 export default function VibeSelector() {
-  const [activeVibe, setActiveVibe] = useState(VIBES[0].id);
+  const [activeVibe, setActiveVibe] = useState('all');
   const { collection } = useCollection();
 
   const filteredProducts = useMemo(() => {
-    // Basic logic mapping vibe to keywords in product name/description
-    // In a real app this would query the DB by tag or style attribute
-    const tshirts = products.filter(p => p.category === 'tshirts' && p.gender === collection);
-    
-    switch (activeVibe) {
-      case 'oversized':
-        return tshirts.filter(p => p.name.toLowerCase().includes('oversized') || p.name.toLowerCase().includes('boxy'));
-      case 'retro':
-        return tshirts.filter(p => p.name.toLowerCase().includes('ringer') || p.name.toLowerCase().includes('raglan'));
-      case 'street':
-        return tshirts.filter(p => p.name.toLowerCase().includes('zipper') || p.name.toLowerCase().includes('oversized'));
-      case 'minimal':
-        return tshirts.filter(p => p.name.toLowerCase().includes('crew') || p.name.toLowerCase().includes('waffle'));
-      case 'summer':
-        return tshirts.filter(p => p.name.toLowerCase().includes('tank') || p.name.toLowerCase().includes('crop'));
-      case 'graphic':
-        return tshirts.slice(0, 4); // mock
-      case 'athletic':
-        return tshirts.filter(p => p.name.toLowerCase().includes('raglan') || p.name.toLowerCase().includes('tank'));
-      default:
-        return tshirts.slice(0, 4);
+    const allItems = products.filter(p => p.gender === collection);
+
+    if (activeVibe === 'all') {
+      return allItems.filter(p => p.category === 'tshirts').slice(0, 8);
     }
+
+    // Filter by the vibes tag array — products can appear in multiple vibes
+    return allItems.filter(p => p.vibes && p.vibes.includes(activeVibe));
   }, [activeVibe, collection]);
 
-  // Ensure we always have some products to show
-  const displayProducts = filteredProducts.length > 0 ? filteredProducts.slice(0, 4) : products.filter(p => p.category === 'tshirts' && p.gender === collection).slice(0, 4);
+  const hasResults = filteredProducts.length > 0;
+  const activeVibeData = VIBES.find(v => v.id === activeVibe);
 
   return (
     <section className="vibe-selector container" id="vibe-selector">
       <div className="section-header text-center">
         <h2 className="section-title justify-center">WHAT'S YOUR VIBE?</h2>
-        <p className="section-subtitle">Pick your mood. We'll show you the fit.</p>
+        <p className="section-subtitle">{VIBE_DESCRIPTIONS[activeVibe] || "Pick your mood. We'll show you the fit."}</p>
       </div>
 
       <div className="vibe-pills-wrapper">
@@ -60,6 +61,7 @@ export default function VibeSelector() {
               key={vibe.id}
               className={`vibe-pill ${activeVibe === vibe.id ? 'active' : ''}`}
               onClick={() => setActiveVibe(vibe.id)}
+              id={`vibe-pill-${vibe.id}`}
             >
               <span className="vibe-icon">{vibe.icon}</span>
               <span className="vibe-label">{vibe.label}</span>
@@ -68,13 +70,45 @@ export default function VibeSelector() {
         </div>
       </div>
 
-      <div className="product-grid vibe-results">
-        {displayProducts.map(product => (
-          <div key={`${activeVibe}-${product.id}`} className="vibe-result-anim">
-            <ProductCard product={product} />
-          </div>
-        ))}
-      </div>
+      {/* Active vibe indicator */}
+      {activeVibe !== 'all' && (
+        <div className="vibe-active-indicator">
+          <span className="vibe-active-tag">
+            {activeVibeData?.icon} {activeVibeData?.label}
+          </span>
+          <button
+            className="vibe-clear-btn"
+            onClick={() => setActiveVibe('all')}
+            aria-label="Show all products"
+          >
+            Show All ×
+          </button>
+        </div>
+      )}
+
+      {hasResults ? (
+        <div className="product-grid vibe-results" key={activeVibe}>
+          {filteredProducts.map(product => (
+            <div key={`${activeVibe}-${product.id}`} className="vibe-result-anim">
+              <ProductCard product={product} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="vibe-empty" key={`empty-${activeVibe}`}>
+          <div className="vibe-empty__icon">{activeVibeData?.icon || '🔍'}</div>
+          <h3 className="vibe-empty__title">No {activeVibeData?.label || ''} fits yet</h3>
+          <p className="vibe-empty__text">
+            We're curating the perfect {activeVibeData?.label?.toLowerCase()} collection for you. Check back soon!
+          </p>
+          <button
+            className="btn btn-secondary"
+            onClick={() => setActiveVibe('all')}
+          >
+            Browse All Products
+          </button>
+        </div>
+      )}
     </section>
   );
 }

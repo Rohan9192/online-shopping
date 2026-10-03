@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { getProductById } from '../../data/products';
 import { getProductImage } from '../../utils/productImages';
+import DeliveryChecker from '../../components/DeliveryChecker/DeliveryChecker';
 import './Cart.css';
 
 export default function Cart() {
@@ -9,6 +10,7 @@ export default function Cart() {
     items, totalItems, subtotal, discount, total,
     tshirtPromo, jeansPromo, tshirtProgress, jeansProgress,
     removeFromCart, updateQuantity, clearCart,
+    deliveryResult, setDeliveryResult
   } = useCart();
 
   if (items.length === 0) {
@@ -187,7 +189,7 @@ export default function Cart() {
                 {jeansPromo.groups > 0 && (
                   <>
                     <div className="cart-summary__row">
-                      <span>{jeansPromo.groups}× promo (3 for ₹1,000)</span>
+                      <span>{jeansPromo.groups}× promo (₹1700 FOR 3)</span>
                       <span>₹{(jeansPromo.groups * 1000).toLocaleString('en-IN')}</span>
                     </div>
                     {jeansPromo.remaining > 0 && (
@@ -212,8 +214,8 @@ export default function Cart() {
                 <span>₹{subtotal.toLocaleString('en-IN')}</span>
               </div>
               <div className="cart-summary__row">
-                <span>Shipping</span>
-                <span className="cart-summary__free">Free</span>
+                <span>Delivery Charge</span>
+                <span>₹120</span>
               </div>
               {discount > 0 && (
                 <div className="cart-summary__row cart-summary__row--discount">
@@ -224,7 +226,7 @@ export default function Cart() {
             </div>
             <div className="cart-summary__total">
               <span>Total</span>
-              <span>₹{total.toLocaleString('en-IN')}</span>
+              <span>₹{(total + 120).toLocaleString('en-IN')}</span>
             </div>
 
             {discount > 0 && (

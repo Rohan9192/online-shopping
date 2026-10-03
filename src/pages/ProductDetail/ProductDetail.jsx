@@ -1,22 +1,38 @@
 import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
+import { useCompare } from '../../context/CompareContext';
 import { getProductById, getProductsByCategory } from '../../data/products';
 import { getProductImage } from '../../utils/productImages';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import DeliveryChecker from '../../components/DeliveryChecker/DeliveryChecker';
+import SizeRecommendationModal from '../../components/SizeRecommendationModal/SizeRecommendationModal';
 import './ProductDetail.css';
 
 export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart, openCart, tshirtPromo, jeansPromo, tshirtProgress, jeansProgress } = useCart();
+  const { compareItems, addToCompare, removeFromCompare } = useCompare();
   const product = getProductById(id);
+  
+  const isComparing = product ? compareItems.some(p => p.id === product.id) : false;
+  
+  const handleCompareToggle = (e) => {
+    e.preventDefault();
+    if (isComparing) {
+      removeFromCompare(product.id);
+    } else {
+      addToCompare(product);
+    }
+  };
 
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [sizeError, setSizeError] = useState(false);
   const [colorError, setColorError] = useState(false);
+  const [isSizeModalOpen, setIsSizeModalOpen] = useState(false);
 
   if (!product) {
     return (
@@ -33,6 +49,11 @@ export default function ProductDetail() {
   const imageSrc = getProductImage(product);
   const related = getProductsByCategory(product.category)
     .filter(p => p.id !== product.id && p.gender === product.gender)
+    .sort((a, b) => {
+      const aVibeMatch = (a.vibes || []).filter(v => (product.vibes || []).includes(v)).length;
+      const bVibeMatch = (b.vibes || []).filter(v => (product.vibes || []).includes(v)).length;
+      return bVibeMatch - aVibeMatch;
+    })
     .slice(0, 4);
   const discountPercent = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
@@ -40,7 +61,7 @@ export default function ProductDetail() {
 
   const promoText = product.category === 'tshirts'
     ? '🔥 BUY ANY 3 T-SHIRTS FOR ₹500'
-    : '🔥 BUY ANY 3 JEANS FOR ₹1,000';
+    : '🔥 ₹1700 FOR 3 JEANS';
     
   const isTshirt = product.category === 'tshirts';
   const promoState = isTshirt ? tshirtPromo : jeansPromo;
@@ -180,9 +201,18 @@ export default function ProductDetail() {
 
             {/* Size */}
             <div className="pdp-info__section">
-              <label className="pdp-info__label">
-                Size {sizeError && <span className="pdp-info__error">— Please select a size</span>}
-              </label>
+              <div className="pdp-info__label-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <label className="pdp-info__label" style={{ marginBottom: 0 }}>
+                  Size {sizeError && <span className="pdp-info__error">— Please select a size</span>}
+                </label>
+                <button 
+                  className="btn btn-sm btn-outline" 
+                  onClick={() => setIsSizeModalOpen(true)}
+                  style={{ fontSize: '12px', padding: '4px 8px' }}
+                >
+                  ✨ Find My Size
+                </button>
+              </div>
               <div className="pdp-info__sizes">
                 {product.sizes.map(size => (
                   <button
@@ -234,21 +264,61 @@ export default function ProductDetail() {
 
             {/* Actions */}
             <div className="pdp-info__actions">
-              <button
-                className="btn btn-primary btn-lg btn-full"
-                onClick={handleAddToCart}
-                id={`pdp-add-to-cart-${product.id}`}
-              >
-                Add to Cart — ₹{(product.price * quantity).toLocaleString('en-IN')}
-              </button>
-              <button
-                className="btn btn-accent btn-lg btn-full"
-                onClick={handleBuyNow}
-                id={`pdp-buy-now-${product.id}`}
-              >
-                Buy Now
-              </button>
+              {product.stock === 0 ? (
+                <div className="pdp-out-of-stock-alert" style={{ background: 'var(--color-off-white)', padding: '16px', borderRadius: '8px', marginBottom: '16px' }}>
+                  <p style={{ color: '#dc2626', fontWeight: 600, marginBottom: '8px' }}>Currently Out of Stock</p>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <input 
+                      type="email" 
+                      placeholder="Email address" 
+                      style={{ flex: 1, padding: '10px', border: '1px solid var(--color-border)', borderRadius: '4px' }}
+                      id="notify-email"
+                    />
+                    <button className="btn btn-outline" onClick={() => {
+                      const email = document.getElementById('notify-email').value;
+                      if(email) {
+                        alert('You will be notified when this item is back in stock!');
+                      }
+                    }}>
+                      Notify Me
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <button
+                    className="btn btn-primary btn-lg btn-full"
+                    onClick={handleAddToCart}
+                    id={`pdp-add-to-cart-${product.id}`}
+                  >
+                    Add to Cart — ₹{(product.price * quantity).toLocaleString('en-IN')}
+                  </button>
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    <button
+                      className="btn btn-accent btn-lg"
+                      style={{ flex: 1 }}
+                      onClick={handleBuyNow}
+                      id={`pdp-buy-now-${product.id}`}
+                    >
+                      Buy Now
+                    </button>
+                    <button
+                      className={`btn btn-outline btn-lg ${isComparing ? 'active' : ''}`}
+                      onClick={handleCompareToggle}
+                      title={isComparing ? "Remove from Compare" : "Add to Compare"}
+                      style={{ minWidth: '60px', padding: 0 }}
+                    >
+                      {isComparing ? '✓' : '⇄'}
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
+
+            {/* Delivery Checker */}
+            <DeliveryChecker 
+              orderTotal={product.price * quantity}
+            />
 
             {/* Benefits */}
             <div className="pdp-info__benefits">
@@ -262,8 +332,8 @@ export default function ProductDetail() {
         {/* Related Products */}
         {related.length > 0 && (
           <section className="pdp-related" id="related-products">
-            <h2 className="section-title text-center">COMPLETE THE FIT</h2>
-            <p className="text-center section-subtitle" style={{marginBottom: '32px'}}>Perfectly paired essentials for your next look.</p>
+            <h2 className="section-title text-center">BASED ON YOUR VIBE</h2>
+            <p className="text-center section-subtitle" style={{marginBottom: '32px'}}>Perfectly paired essentials matching this style.</p>
             <div className="product-grid">
               {related.map(p => (
                 <ProductCard key={p.id} product={p} />
@@ -275,6 +345,16 @@ export default function ProductDetail() {
           </section>
         )}
       </div>
+      
+      <SizeRecommendationModal 
+        isOpen={isSizeModalOpen} 
+        onClose={() => setIsSizeModalOpen(false)} 
+        product={product}
+        onApplySize={(size) => {
+          setSelectedSize(size);
+          setSizeError(false);
+        }}
+      />
     </div>
   );
 }

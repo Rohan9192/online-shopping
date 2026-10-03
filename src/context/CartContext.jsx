@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
 import { calculateCart, getOfferProgress } from '../utils/promotionEngine';
+import { getProductImage } from '../utils/productImages';
 
 const CartContext = createContext();
 
@@ -32,6 +33,7 @@ export function CartProvider({ children }) {
   const [notification, setNotification] = useState(null);
   const [serverValidation, setServerValidation] = useState(null);
   const [offersConfig, setOffersConfig] = useState(null);
+  const [deliveryResult, setDeliveryResult] = useState(null);
   const validationTimerRef = useRef(null);
 
   // Fetch offers config on mount
@@ -128,7 +130,7 @@ export function CartProvider({ children }) {
           category: product.category,
           price: product.price,
           originalPrice: product.originalPrice,
-          image: product.images?.[0],
+          image: getProductImage(product),
           size,
           color,
           quantity,
@@ -143,7 +145,7 @@ export function CartProvider({ children }) {
       const isTshirt = product.category === 'tshirts';
       const offer = isTshirt ? offersConfig?.tshirts : offersConfig?.jeans;
       const remaining = catCount % (offer?.quantity || 3);
-      const priceStr = offer ? `₹${offer.price.toLocaleString('en-IN')}` : (isTshirt ? '₹500' : '₹1,000');
+      const priceStr = offer ? `₹${offer.price.toLocaleString('en-IN')}` : (isTshirt ? '₹500' : '₹1,700');
       const targetQty = offer?.quantity || 3;
       const plural = isTshirt ? 'T-Shirts' : 'Jeans';
       const singular = isTshirt ? 'T-Shirt' : 'Jeans';
@@ -234,6 +236,8 @@ export function CartProvider({ children }) {
     openCart,
     closeCart,
     toggleCart,
+    deliveryResult,
+    setDeliveryResult,
   };
 
   return (

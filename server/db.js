@@ -5,6 +5,6 @@ export const db = {
   orders: [],
   offers: {
     tshirts: { active: true, quantity: 3, price: 500 },
-    jeans: { active: true, quantity: 3, price: 1000 }
+    jeans: { active: true, quantity: 3, price: 1700 }
   }
 };

@@ -1,15 +1,21 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
+import { useCompare } from '../../context/CompareContext';
 import { getProductImage } from '../../utils/productImages';
 import './ProductCard.css';
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
+  const { compareItems, addToCompare, removeFromCompare } = useCompare();
+  const navigate = useNavigate();
+  
   const [imageLoaded, setImageLoaded] = useState(false);
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
   const [isSaved, setIsSaved] = useState(false);
   const [showSavedFeedback, setShowSavedFeedback] = useState(false);
+
+  const isComparing = compareItems.some(p => p.id === product.id);
 
   const imageSrc = getProductImage(product);
   const discountPercent = product.originalPrice
@@ -29,6 +35,16 @@ export default function ProductCard({ product }) {
     if (!isSaved) {
       setShowSavedFeedback(true);
       setTimeout(() => setShowSavedFeedback(false), 2000);
+    }
+  };
+
+  const handleCompareToggle = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isComparing) {
+      removeFromCompare(product.id);
+    } else {
+      addToCompare(product);
     }
   };
 
@@ -59,30 +75,49 @@ export default function ProductCard({ product }) {
           />
           {/* Badges */}
           <div className="product-card__badges">
-            {product.category === 'tshirts' && (
+            {product.stock === 0 && (
+              <span className="product-card__badge product-card__badge--oos" style={{ background: '#dc2626', color: 'white' }}>Out of Stock</span>
+            )}
+            {product.category === 'tshirts' && product.stock !== 0 && (
               <span className="product-card__badge product-card__badge--promo">3 FOR ₹500</span>
             )}
-            {product.badge && (
+            {product.badge && product.stock !== 0 && (
               <span className="product-card__badge">{product.badge}</span>
             )}
-            {discountPercent > 0 && (
+            {discountPercent > 0 && product.stock !== 0 && (
               <span className="product-card__badge product-card__badge--sale">-{discountPercent}%</span>
             )}
-            {product.isNew && !product.badge && (
+            {product.isNew && !product.badge && product.stock !== 0 && (
               <span className="product-card__badge product-card__badge--new">New</span>
             )}
           </div>
 
           {/* Quick Add Overlay */}
           <div className="product-card__overlay">
-            <button
-              className="btn btn-primary btn-sm product-card__add-btn"
-              onClick={handleAddToCart}
-              id={`add-to-cart-${product.id}`}
-            >
-              Add to Cart
-            </button>
+            {product.stock === 0 ? (
+              <button className="btn btn-secondary btn-sm product-card__add-btn" disabled>
+                Out of Stock
+              </button>
+            ) : (
+              <button
+                className="btn btn-primary btn-sm product-card__add-btn"
+                onClick={handleAddToCart}
+                id={`add-to-cart-${product.id}`}
+              >
+                Add to Cart
+              </button>
+            )}
           </div>
+
+          {/* Compare Button */}
+          <button 
+            className={`product-card__compare-btn ${isComparing ? 'active' : ''}`}
+            onClick={handleCompareToggle}
+            aria-label="Compare Product"
+            title={isComparing ? "Remove from Compare" : "Compare Product"}
+          >
+            ⇄
+          </button>
 
           {/* Save to fits (Wishlist) */}
           <button 
@@ -106,6 +141,24 @@ export default function ProductCard({ product }) {
             {product.category === 'tshirts' ? 'T-Shirt' : 'Jeans'}
           </p>
           <h3 className="product-card__name">{product.name}</h3>
+
+          {/* Promo Badge for Jeans */}
+          {product.category === 'jeans' && product.stock !== 0 && (
+            <div style={{ marginTop: '4px', marginBottom: '8px' }}>
+              <span style={{ 
+                display: 'inline-block', 
+                background: 'linear-gradient(90deg, #111, #333)', 
+                color: '#fff', 
+                fontSize: '11px', 
+                fontWeight: 'bold', 
+                padding: '4px 8px', 
+                borderRadius: '4px',
+                letterSpacing: '0.5px'
+              }}>
+                ₹1700 / 3
+              </span>
+            </div>
+          )}
 
           {/* Rating */}
           <div className="product-card__rating">

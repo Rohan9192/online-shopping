@@ -6,6 +6,7 @@ import CategoryGrid from '../../components/CategoryGrid/CategoryGrid';
 import StyleSection from '../../components/StyleSection/StyleSection';
 import PromoBanner from '../../components/PromoBanner/PromoBanner';
 import TShirtDealSection from '../../components/TShirtDealSection/TShirtDealSection';
+import JeansPromoBanner from '../../components/JeansPromoBanner/JeansPromoBanner';
 import VibeSelector from '../../components/VibeSelector/VibeSelector';
 import FindMyFit from '../../components/FindMyFit/FindMyFit';
 import DropSection from '../../components/DropSection/DropSection';
@@ -56,6 +57,9 @@ export default function Home() {
 
       {/* ===== 3. T-SHIRT DEAL SECTION ===== */}
       <TShirtDealSection tshirts={tshirts} />
+
+      {/* ===== 3.5 JEANS PROMO BANNER ===== */}
+      <JeansPromoBanner />
 
       {/* ===== 4. WHAT'S YOUR VIBE? ===== */}
       <VibeSelector />

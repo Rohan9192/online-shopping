@@ -11,6 +11,12 @@ import ProductDetail from './pages/ProductDetail/ProductDetail';
 import Cart from './pages/Cart/Cart';
 import Checkout from './pages/Checkout/Checkout';
 import OrderConfirmation from './pages/OrderConfirmation/OrderConfirmation';
+import OutfitBuilder from './pages/OutfitBuilder/OutfitBuilder';
+import Compare from './pages/Compare/Compare';
+import Account from './pages/Account/Account';
+import Gallery from './pages/Gallery/Gallery';
+import GiftCards from './pages/GiftCards/GiftCards';
+import Policies from './pages/Policies/Policies';
 
 // Admin imports
 import AdminLayout from './pages/Admin/AdminLayout';
@@ -45,6 +51,12 @@ function Storefront() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/order/:id" element={<OrderConfirmation />} />
+          <Route path="/outfit-builder" element={<OutfitBuilder />} />
+          <Route path="/compare" element={<Compare />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/gift-cards" element={<GiftCards />} />
+          <Route path="/policies/:policyId" element={<Policies />} />
         </Routes>
       </main>
       <Footer />

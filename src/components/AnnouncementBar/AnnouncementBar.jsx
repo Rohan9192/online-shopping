@@ -5,7 +5,7 @@ export default function AnnouncementBar() {
   const { tshirtProgress, jeansProgress, totalItems } = useCart();
 
   // Determine what message to show
-  let activeMessage = "🔥 3 T-SHIRTS FOR ₹500 • 3 JEANS FOR ₹1000 🔥";
+  let activeMessage = "🔥 3 T-SHIRTS FOR ₹500 • ₹1700 FOR 3 JEANS 🔥";
   let type = "default"; // default, warning (near unlock), success (unlocked)
 
   // Prioritize showing progress over default message
@@ -29,7 +29,7 @@ export default function AnnouncementBar() {
     <div className={`announcement-bar announcement-bar--${type}`}>
       <div className="announcement-bar__content container">
         {type === 'default' ? (
-          <p>🔥 3 T-SHIRTS FOR ₹500 • 3 JEANS FOR ₹1000 🔥 — <a href="/offers" style={{color: 'var(--color-accent)', textDecoration: 'underline'}}>Shop Now</a></p>
+          <p>🔥 3 T-SHIRTS FOR ₹500 • ₹1700 FOR 3 JEANS 🔥 — <a href="/offers" style={{color: 'var(--color-accent)', textDecoration: 'underline'}}>Shop Now</a></p>
         ) : (
           <p>{activeMessage}</p>
         )}

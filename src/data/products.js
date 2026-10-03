@@ -1,5 +1,23 @@
 export const products = [
   {
+    "id": "gift-card",
+    "name": "StyleHub E-Gift Card",
+    "category": "accessories",
+    "description": "Give the gift of choice with a StyleHub E-Gift Card. Perfect for any occasion. Delivered instantly via email.",
+    "price": 1000,
+    "originalPrice": null,
+    "rating": 5.0,
+    "reviews": 128,
+    "sizes": ["₹500", "₹1,000", "₹2,000", "₹5,000"],
+    "colors": [{ "name": "Digital", "hex": "#000000" }],
+    "images": ["/images/gift-card-black.jpg"],
+    "badge": "Digital Delivery",
+    "isNew": true,
+    "isSale": false,
+    "gender": "UNISEX",
+    "vibes": []
+  },
+  {
     "id": "ts-001",
     "name": "Classic Black T-Shirt",
     "category": "tshirts",
@@ -8,30 +26,18 @@ export const products = [
     "originalPrice": 599,
     "rating": 4.5,
     "reviews": 234,
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
+    "sizes": ["S", "M", "L", "XL", "XXL"],
     "colors": [
-      {
-        "name": "Black",
-        "hex": "#0a0a0a"
-      },
-      {
-        "name": "Charcoal",
-        "hex": "#333333"
-      }
+      { "name": "Black", "hex": "#0a0a0a" },
+      { "name": "Charcoal", "hex": "#333333" }
     ],
-    "images": [
-      "/images/tshirt-black.jpg"
-    ],
+    "images": ["/images/tshirt-black.jpg"],
     "badge": "Bestseller",
     "isNew": false,
+    "stock": 0,
     "isSale": true,
-    "gender": "MEN"
+    "gender": "MEN",
+    "vibes": ["minimal", "street"]
   },
   {
     "id": "w-ts-001",
@@ -42,30 +48,17 @@ export const products = [
     "originalPrice": 599,
     "rating": 4.5,
     "reviews": 234,
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
+    "sizes": ["S", "M", "L", "XL", "XXL"],
     "colors": [
-      {
-        "name": "Black",
-        "hex": "#0a0a0a"
-      },
-      {
-        "name": "Charcoal",
-        "hex": "#333333"
-      }
+      { "name": "Black", "hex": "#0a0a0a" },
+      { "name": "Charcoal", "hex": "#333333" }
     ],
-    "images": [
-      "/images/tshirt-black.jpg"
-    ],
+    "images": ["/images/tshirt-black.jpg"],
     "badge": "Bestseller",
     "isNew": false,
     "isSale": true,
-    "gender": "WOMEN"
+    "gender": "WOMEN",
+    "vibes": ["minimal", "street"]
   },
   {
     "id": "ts-002",
@@ -76,29 +69,17 @@ export const products = [
     "originalPrice": 699,
     "rating": 4.7,
     "reviews": 189,
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
+    "sizes": ["S", "M", "L", "XL"],
     "colors": [
-      {
-        "name": "White",
-        "hex": "#ffffff"
-      },
-      {
-        "name": "Off-White",
-        "hex": "#f5f0e8"
-      }
+      { "name": "White", "hex": "#ffffff" },
+      { "name": "Off-White", "hex": "#f5f0e8" }
     ],
-    "images": [
-      "/images/tshirt-white.jpg"
-    ],
+    "images": ["/images/tshirt-white.jpg"],
     "badge": "Premium",
     "isNew": false,
     "isSale": true,
-    "gender": "MEN"
+    "gender": "MEN",
+    "vibes": ["minimal", "summer"]
   },
   {
     "id": "w-ts-002",
@@ -109,29 +90,17 @@ export const products = [
     "originalPrice": 699,
     "rating": 4.7,
     "reviews": 189,
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
+    "sizes": ["S", "M", "L", "XL"],
     "colors": [
-      {
-        "name": "White",
-        "hex": "#ffffff"
-      },
-      {
-        "name": "Off-White",
-        "hex": "#f5f0e8"
-      }
+      { "name": "White", "hex": "#ffffff" },
+      { "name": "Off-White", "hex": "#f5f0e8" }
     ],
-    "images": [
-      "/images/tshirt-white.jpg"
-    ],
+    "images": ["/images/tshirt-white.jpg"],
     "badge": "Premium",
     "isNew": false,
     "isSale": true,
-    "gender": "WOMEN"
+    "gender": "WOMEN",
+    "vibes": ["minimal", "summer"]
   },
   {
     "id": "ts-003",
@@ -142,29 +111,17 @@ export const products = [
     "originalPrice": 799,
     "rating": 4.3,
     "reviews": 145,
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
+    "sizes": ["S", "M", "L", "XL"],
     "colors": [
-      {
-        "name": "Beige",
-        "hex": "#d4b896"
-      },
-      {
-        "name": "Sand",
-        "hex": "#c2a882"
-      }
+      { "name": "Beige", "hex": "#d4b896" },
+      { "name": "Sand", "hex": "#c2a882" }
     ],
-    "images": [
-      "/images/tshirt-beige.jpg"
-    ],
+    "images": ["/images/tshirt-beige.jpg"],
     "badge": null,
     "isNew": true,
     "isSale": true,
-    "gender": "MEN"
+    "gender": "MEN",
+    "vibes": ["oversized", "street", "minimal"]
   },
   {
     "id": "w-ts-003",
@@ -175,29 +132,17 @@ export const products = [
     "originalPrice": 799,
     "rating": 4.3,
     "reviews": 145,
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
+    "sizes": ["S", "M", "L", "XL"],
     "colors": [
-      {
-        "name": "Beige",
-        "hex": "#d4b896"
-      },
-      {
-        "name": "Sand",
-        "hex": "#c2a882"
-      }
+      { "name": "Beige", "hex": "#d4b896" },
+      { "name": "Sand", "hex": "#c2a882" }
     ],
-    "images": [
-      "/images/tshirt-beige.jpg"
-    ],
+    "images": ["/images/tshirt-beige.jpg"],
     "badge": null,
     "isNew": true,
     "isSale": true,
-    "gender": "WOMEN"
+    "gender": "WOMEN",
+    "vibes": ["oversized", "street", "minimal"]
   },
   {
     "id": "ts-004",
@@ -208,26 +153,16 @@ export const products = [
     "originalPrice": 899,
     "rating": 4.6,
     "reviews": 98,
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
+    "sizes": ["S", "M", "L", "XL", "XXL"],
     "colors": [
-      {
-        "name": "Black",
-        "hex": "#0a0a0a"
-      }
+      { "name": "Black", "hex": "#0a0a0a" }
     ],
-    "images": [
-      "/images/tshirt-graphic.jpg"
-    ],
+    "images": ["/images/tshirt-graphic.jpg"],
     "badge": "Trending",
     "isNew": true,
     "isSale": true,
-    "gender": "MEN"
+    "gender": "MEN",
+    "vibes": ["graphic", "street", "retro"]
   },
   {
     "id": "w-ts-004",
@@ -238,26 +173,16 @@ export const products = [
     "originalPrice": 899,
     "rating": 4.6,
     "reviews": 98,
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
+    "sizes": ["S", "M", "L", "XL", "XXL"],
     "colors": [
-      {
-        "name": "Black",
-        "hex": "#0a0a0a"
-      }
+      { "name": "Black", "hex": "#0a0a0a" }
     ],
-    "images": [
-      "/images/tshirt-graphic.jpg"
-    ],
+    "images": ["/images/tshirt-graphic.jpg"],
     "badge": "Trending",
     "isNew": true,
     "isSale": true,
-    "gender": "WOMEN"
+    "gender": "WOMEN",
+    "vibes": ["graphic", "street", "retro"]
   },
   {
     "id": "ts-005",
@@ -268,29 +193,17 @@ export const products = [
     "originalPrice": 599,
     "rating": 4.4,
     "reviews": 312,
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
+    "sizes": ["S", "M", "L", "XL"],
     "colors": [
-      {
-        "name": "Navy",
-        "hex": "#1b2a4a"
-      },
-      {
-        "name": "Dark Blue",
-        "hex": "#1a237e"
-      }
+      { "name": "Navy", "hex": "#1b2a4a" },
+      { "name": "Dark Blue", "hex": "#1a237e" }
     ],
-    "images": [
-      "/images/tshirt-navy.jpg"
-    ],
+    "images": ["/images/tshirt-navy.jpg"],
     "badge": null,
     "isNew": false,
     "isSale": true,
-    "gender": "MEN"
+    "gender": "MEN",
+    "vibes": ["minimal", "athletic", "retro"]
   },
   {
     "id": "w-ts-005",
@@ -301,29 +214,17 @@ export const products = [
     "originalPrice": 599,
     "rating": 4.4,
     "reviews": 312,
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL"
-    ],
+    "sizes": ["S", "M", "L", "XL"],
     "colors": [
-      {
-        "name": "Navy",
-        "hex": "#1b2a4a"
-      },
-      {
-        "name": "Dark Blue",
-        "hex": "#1a237e"
-      }
+      { "name": "Navy", "hex": "#1b2a4a" },
+      { "name": "Dark Blue", "hex": "#1a237e" }
     ],
-    "images": [
-      "/images/tshirt-navy.jpg"
-    ],
+    "images": ["/images/tshirt-navy.jpg"],
     "badge": null,
     "isNew": false,
     "isSale": true,
-    "gender": "WOMEN"
+    "gender": "WOMEN",
+    "vibes": ["minimal", "athletic", "retro"]
   },
   {
     "id": "ts-006",
@@ -334,30 +235,17 @@ export const products = [
     "originalPrice": 699,
     "rating": 4.5,
     "reviews": 167,
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
+    "sizes": ["S", "M", "L", "XL", "XXL"],
     "colors": [
-      {
-        "name": "Gray",
-        "hex": "#808080"
-      },
-      {
-        "name": "Heather Gray",
-        "hex": "#9e9e9e"
-      }
+      { "name": "Gray", "hex": "#808080" },
+      { "name": "Heather Gray", "hex": "#9e9e9e" }
     ],
-    "images": [
-      "/images/tshirt-gray.jpg"
-    ],
+    "images": ["/images/tshirt-gray.jpg"],
     "badge": null,
     "isNew": false,
     "isSale": true,
-    "gender": "MEN"
+    "gender": "MEN",
+    "vibes": ["minimal", "athletic", "summer"]
   },
   {
     "id": "w-ts-006",
@@ -368,30 +256,17 @@ export const products = [
     "originalPrice": 699,
     "rating": 4.5,
     "reviews": 167,
-    "sizes": [
-      "S",
-      "M",
-      "L",
-      "XL",
-      "XXL"
-    ],
+    "sizes": ["S", "M", "L", "XL", "XXL"],
     "colors": [
-      {
-        "name": "Gray",
-        "hex": "#808080"
-      },
-      {
-        "name": "Heather Gray",
-        "hex": "#9e9e9e"
-      }
+      { "name": "Gray", "hex": "#808080" },
+      { "name": "Heather Gray", "hex": "#9e9e9e" }
     ],
-    "images": [
-      "/images/tshirt-gray.jpg"
-    ],
+    "images": ["/images/tshirt-gray.jpg"],
     "badge": null,
     "isNew": false,
     "isSale": true,
-    "gender": "WOMEN"
+    "gender": "WOMEN",
+    "vibes": ["minimal", "athletic", "summer"]
   },
   {
     "id": "jn-001",
@@ -402,30 +277,17 @@ export const products = [
     "originalPrice": 1299,
     "rating": 4.6,
     "reviews": 287,
-    "sizes": [
-      "28",
-      "30",
-      "32",
-      "34",
-      "36"
-    ],
+    "sizes": ["28", "30", "32", "34", "36"],
     "colors": [
-      {
-        "name": "Classic Blue",
-        "hex": "#3d5a80"
-      },
-      {
-        "name": "Medium Blue",
-        "hex": "#4a7ab5"
-      }
+      { "name": "Classic Blue", "hex": "#3d5a80" },
+      { "name": "Medium Blue", "hex": "#4a7ab5" }
     ],
-    "images": [
-      "/images/jeans-blue.jpg"
-    ],
+    "images": ["/images/jeans-blue.jpg"],
     "badge": "Bestseller",
     "isNew": false,
     "isSale": true,
-    "gender": "MEN"
+    "gender": "MEN",
+    "vibes": ["minimal", "retro"]
   },
   {
     "id": "w-jn-001",
@@ -436,30 +298,17 @@ export const products = [
     "originalPrice": 1299,
     "rating": 4.6,
     "reviews": 287,
-    "sizes": [
-      "28",
-      "30",
-      "32",
-      "34",
-      "36"
-    ],
+    "sizes": ["28", "30", "32", "34", "36"],
     "colors": [
-      {
-        "name": "Classic Blue",
-        "hex": "#3d5a80"
-      },
-      {
-        "name": "Medium Blue",
-        "hex": "#4a7ab5"
-      }
+      { "name": "Classic Blue", "hex": "#3d5a80" },
+      { "name": "Medium Blue", "hex": "#4a7ab5" }
     ],
-    "images": [
-      "/images/jeans-blue.jpg"
-    ],
+    "images": ["/images/jeans-blue.jpg"],
     "badge": "Bestseller",
     "isNew": false,
     "isSale": true,
-    "gender": "WOMEN"
+    "gender": "WOMEN",
+    "vibes": ["minimal", "retro"]
   },
   {
     "id": "jn-002",
@@ -470,26 +319,16 @@ export const products = [
     "originalPrice": 1499,
     "rating": 4.7,
     "reviews": 156,
-    "sizes": [
-      "28",
-      "30",
-      "32",
-      "34",
-      "36"
-    ],
+    "sizes": ["28", "30", "32", "34", "36"],
     "colors": [
-      {
-        "name": "Dark Indigo",
-        "hex": "#1a237e"
-      }
+      { "name": "Dark Indigo", "hex": "#1a237e" }
     ],
-    "images": [
-      "/images/jeans-dark.jpg"
-    ],
+    "images": ["/images/jeans-dark.jpg"],
     "badge": "Premium",
     "isNew": false,
     "isSale": true,
-    "gender": "MEN"
+    "gender": "MEN",
+    "vibes": ["minimal", "street"]
   },
   {
     "id": "w-jn-002",
@@ -500,26 +339,16 @@ export const products = [
     "originalPrice": 1499,
     "rating": 4.7,
     "reviews": 156,
-    "sizes": [
-      "28",
-      "30",
-      "32",
-      "34",
-      "36"
-    ],
+    "sizes": ["28", "30", "32", "34", "36"],
     "colors": [
-      {
-        "name": "Dark Indigo",
-        "hex": "#1a237e"
-      }
+      { "name": "Dark Indigo", "hex": "#1a237e" }
     ],
-    "images": [
-      "/images/jeans-dark.jpg"
-    ],
+    "images": ["/images/jeans-dark.jpg"],
     "badge": "Premium",
     "isNew": false,
     "isSale": true,
-    "gender": "WOMEN"
+    "gender": "WOMEN",
+    "vibes": ["minimal", "street"]
   },
   {
     "id": "jn-003",
@@ -530,30 +359,17 @@ export const products = [
     "originalPrice": 1399,
     "rating": 4.5,
     "reviews": 198,
-    "sizes": [
-      "28",
-      "30",
-      "32",
-      "34",
-      "36"
-    ],
+    "sizes": ["28", "30", "32", "34", "36"],
     "colors": [
-      {
-        "name": "Black",
-        "hex": "#0a0a0a"
-      },
-      {
-        "name": "Washed Black",
-        "hex": "#2d2d2d"
-      }
+      { "name": "Black", "hex": "#0a0a0a" },
+      { "name": "Washed Black", "hex": "#2d2d2d" }
     ],
-    "images": [
-      "/images/jeans-black.jpg"
-    ],
+    "images": ["/images/jeans-black.jpg"],
     "badge": null,
     "isNew": true,
     "isSale": true,
-    "gender": "MEN"
+    "gender": "MEN",
+    "vibes": ["minimal", "street"]
   },
   {
     "id": "w-jn-003",
@@ -564,30 +380,17 @@ export const products = [
     "originalPrice": 1399,
     "rating": 4.5,
     "reviews": 198,
-    "sizes": [
-      "28",
-      "30",
-      "32",
-      "34",
-      "36"
-    ],
+    "sizes": ["28", "30", "32", "34", "36"],
     "colors": [
-      {
-        "name": "Black",
-        "hex": "#0a0a0a"
-      },
-      {
-        "name": "Washed Black",
-        "hex": "#2d2d2d"
-      }
+      { "name": "Black", "hex": "#0a0a0a" },
+      { "name": "Washed Black", "hex": "#2d2d2d" }
     ],
-    "images": [
-      "/images/jeans-black.jpg"
-    ],
+    "images": ["/images/jeans-black.jpg"],
     "badge": null,
     "isNew": true,
     "isSale": true,
-    "gender": "WOMEN"
+    "gender": "WOMEN",
+    "vibes": ["minimal", "street"]
   },
   {
     "id": "jn-004",
@@ -598,31 +401,17 @@ export const products = [
     "originalPrice": 1199,
     "rating": 4.4,
     "reviews": 132,
-    "sizes": [
-      "28",
-      "30",
-      "32",
-      "34",
-      "36",
-      "38"
-    ],
+    "sizes": ["28", "30", "32", "34", "36", "38"],
     "colors": [
-      {
-        "name": "Mid Blue",
-        "hex": "#5c85b3"
-      },
-      {
-        "name": "Stone Wash",
-        "hex": "#7a8fa6"
-      }
+      { "name": "Mid Blue", "hex": "#5c85b3" },
+      { "name": "Stone Wash", "hex": "#7a8fa6" }
     ],
-    "images": [
-      "/images/jeans-relaxed.jpg"
-    ],
+    "images": ["/images/jeans-relaxed.jpg"],
     "badge": null,
     "isNew": true,
     "isSale": true,
-    "gender": "MEN"
+    "gender": "MEN",
+    "vibes": ["oversized", "retro", "summer"]
   },
   {
     "id": "w-jn-004",
@@ -633,31 +422,17 @@ export const products = [
     "originalPrice": 1199,
     "rating": 4.4,
     "reviews": 132,
-    "sizes": [
-      "28",
-      "30",
-      "32",
-      "34",
-      "36",
-      "38"
-    ],
+    "sizes": ["28", "30", "32", "34", "36", "38"],
     "colors": [
-      {
-        "name": "Mid Blue",
-        "hex": "#5c85b3"
-      },
-      {
-        "name": "Stone Wash",
-        "hex": "#7a8fa6"
-      }
+      { "name": "Mid Blue", "hex": "#5c85b3" },
+      { "name": "Stone Wash", "hex": "#7a8fa6" }
     ],
-    "images": [
-      "/images/jeans-relaxed.jpg"
-    ],
+    "images": ["/images/jeans-relaxed.jpg"],
     "badge": null,
     "isNew": true,
     "isSale": true,
-    "gender": "WOMEN"
+    "gender": "WOMEN",
+    "vibes": ["oversized", "retro", "summer"]
   },
   {
     "id": "jn-005",
@@ -668,25 +443,16 @@ export const products = [
     "originalPrice": 1299,
     "rating": 4.3,
     "reviews": 89,
-    "sizes": [
-      "28",
-      "30",
-      "32",
-      "34"
-    ],
+    "sizes": ["28", "30", "32", "34"],
     "colors": [
-      {
-        "name": "Light Blue",
-        "hex": "#8bb0d0"
-      }
+      { "name": "Light Blue", "hex": "#8bb0d0" }
     ],
-    "images": [
-      "/images/jeans-light.jpg"
-    ],
+    "images": ["/images/jeans-light.jpg"],
     "badge": "Trending",
     "isNew": false,
     "isSale": true,
-    "gender": "MEN"
+    "gender": "MEN",
+    "vibes": ["summer", "retro"]
   },
   {
     "id": "w-jn-005",
@@ -697,25 +463,16 @@ export const products = [
     "originalPrice": 1299,
     "rating": 4.3,
     "reviews": 89,
-    "sizes": [
-      "28",
-      "30",
-      "32",
-      "34"
-    ],
+    "sizes": ["28", "30", "32", "34"],
     "colors": [
-      {
-        "name": "Light Blue",
-        "hex": "#8bb0d0"
-      }
+      { "name": "Light Blue", "hex": "#8bb0d0" }
     ],
-    "images": [
-      "/images/jeans-light.jpg"
-    ],
+    "images": ["/images/jeans-light.jpg"],
     "badge": "Trending",
     "isNew": false,
     "isSale": true,
-    "gender": "WOMEN"
+    "gender": "WOMEN",
+    "vibes": ["summer", "retro"]
   },
   {
     "id": "jn-006",
@@ -726,30 +483,17 @@ export const products = [
     "originalPrice": 1399,
     "rating": 4.5,
     "reviews": 213,
-    "sizes": [
-      "28",
-      "30",
-      "32",
-      "34",
-      "36"
-    ],
+    "sizes": ["28", "30", "32", "34", "36"],
     "colors": [
-      {
-        "name": "Dark Blue",
-        "hex": "#2c3e6b"
-      },
-      {
-        "name": "Blue",
-        "hex": "#4a6fa5"
-      }
+      { "name": "Dark Blue", "hex": "#2c3e6b" },
+      { "name": "Blue", "hex": "#4a6fa5" }
     ],
-    "images": [
-      "/images/jeans-straight.jpg"
-    ],
+    "images": ["/images/jeans-straight.jpg"],
     "badge": null,
     "isNew": false,
     "isSale": true,
-    "gender": "MEN"
+    "gender": "MEN",
+    "vibes": ["minimal", "retro"]
   },
   {
     "id": "w-jn-006",
@@ -760,30 +504,17 @@ export const products = [
     "originalPrice": 1399,
     "rating": 4.5,
     "reviews": 213,
-    "sizes": [
-      "28",
-      "30",
-      "32",
-      "34",
-      "36"
-    ],
+    "sizes": ["28", "30", "32", "34", "36"],
     "colors": [
-      {
-        "name": "Dark Blue",
-        "hex": "#2c3e6b"
-      },
-      {
-        "name": "Blue",
-        "hex": "#4a6fa5"
-      }
+      { "name": "Dark Blue", "hex": "#2c3e6b" },
+      { "name": "Blue", "hex": "#4a6fa5" }
     ],
-    "images": [
-      "/images/jeans-straight.jpg"
-    ],
+    "images": ["/images/jeans-straight.jpg"],
     "badge": null,
     "isNew": false,
     "isSale": true,
-    "gender": "WOMEN"
+    "gender": "WOMEN",
+    "vibes": ["minimal", "retro"]
   }
 ];
 
@@ -794,3 +525,4 @@ export const getNewArrivals = () => products.filter(p => p.isNew);
 export const getSaleProducts = () => products.filter(p => p.isSale);
 export const getTShirts = () => products.filter(p => p.category === 'tshirts');
 export const getJeans = () => products.filter(p => p.category === 'jeans');
+export const getProductsByVibe = (vibe, gender) => products.filter(p => p.vibes?.includes(vibe) && p.gender === gender);

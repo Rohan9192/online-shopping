@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
+import { useCompare } from '../../context/CompareContext';
 import { useCollection } from '../../context/CollectionContext';
+import VisualSearchModal from '../VisualSearchModal/VisualSearchModal';
 import './Header.css';
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [visualSearchOpen, setVisualSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const { totalItems, toggleCart } = useCart();
+  const { compareItems } = useCompare();
   const { collection, setCollection } = useCollection();
   const location = useLocation();
 
@@ -32,7 +36,10 @@ export default function Header() {
   const navLinks = [
     { to: '/', label: 'Home' },
     { to: '/new-arrivals', label: 'New Arrivals' },
-    { to: '/offers', label: 'Trending' }
+    { to: '/offers', label: 'Trending' },
+    { to: '/outfit-builder', label: 'Mix & Match' },
+    { to: '/gallery', label: 'Gallery' },
+    { to: '/gift-cards', label: 'Gift Cards' }
   ];
 
   return (
@@ -90,11 +97,26 @@ export default function Header() {
 
           {/* Actions */}
           <div className="header__actions">
+            {/* Visual Search */}
+            <button 
+              className="header__icon-btn" 
+              onClick={() => setVisualSearchOpen(true)}
+              aria-label="Visual Search"
+              title="Visual Search"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+              </svg>
+            </button>
+
             {/* Search */}
             <button 
               className="header__icon-btn" 
               onClick={() => setSearchOpen(!searchOpen)}
               aria-label="Search"
+              title="Search"
               id="search-toggle"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -103,15 +125,25 @@ export default function Header() {
               </svg>
             </button>
 
-            {/* Account */}
-            <Link to="/" className="header__icon-btn" aria-label="Wishlist" id="wishlist-link">
+            {/* Compare */}
+            <Link to="/compare" className="header__icon-btn" aria-label="Compare" title="Compare" id="compare-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
+              </svg>
+              {compareItems.length > 0 && (
+                <span className="header__cart-badge">{compareItems.length}</span>
+              )}
+            </Link>
+
+            {/* Wishlist */}
+            <Link to="/" className="header__icon-btn" aria-label="Wishlist" title="Wishlist" id="wishlist-link">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
               </svg>
             </Link>
 
             {/* Account */}
-            <Link to="/" className="header__icon-btn" aria-label="Account" id="account-link">
+            <Link to="/account" className="header__icon-btn" aria-label="Account" title="Account" id="account-link">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                 <circle cx="12" cy="7" r="4"/>
@@ -123,6 +155,7 @@ export default function Header() {
               className="header__icon-btn header__cart-btn" 
               onClick={toggleCart}
               aria-label={`Cart with ${totalItems} items`}
+              title="Cart"
               id="cart-toggle"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -200,9 +233,14 @@ export default function Header() {
         </div>
         <div className="mobile-nav__promo">
           <p>🔥 3 T-Shirts for ₹500</p>
-          <p>🔥 3 Jeans for ₹1,000</p>
+          <p>🔥 ₹1700 FOR 3 JEANS</p>
         </div>
       </nav>
+      
+      <VisualSearchModal
+        isOpen={visualSearchOpen}
+        onClose={() => setVisualSearchOpen(false)}
+      />
     </>
   );
 }

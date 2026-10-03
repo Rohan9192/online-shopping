@@ -1,0 +1,212 @@
+/* ========= Delivery Checker ========= */
+.delivery-checker {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.delivery-checker__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: var(--space-md);
+}
+
+.delivery-checker__icon {
+  color: var(--color-dark-gray);
+}
+
+.delivery-checker__label {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-dark-gray);
+}
+
+.delivery-checker__input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.delivery-checker__input {
+  flex: 1;
+  height: 44px;
+  padding: 0 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-family: var(--font-body);
+  color: var(--color-black);
+  background: var(--color-white);
+  transition: border-color var(--transition-fast);
+  outline: none;
+  letter-spacing: 2px;
+}
+
+.delivery-checker__input::placeholder {
+  color: var(--color-light-gray);
+  letter-spacing: 0;
+}
+
+.delivery-checker__input:focus {
+  border-color: var(--color-black);
+}
+
+.delivery-checker__btn {
+  height: 44px;
+  padding: 0 20px;
+  background: var(--color-black);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delivery-checker__btn:hover:not(:disabled) {
+  background: var(--color-dark-gray);
+}
+
+.delivery-checker__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Spinner */
+.delivery-checker__spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: var(--color-white);
+  border-radius: 50%;
+  animation: deliverySpin 0.6s linear infinite;
+}
+
+@keyframes deliverySpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Results */
+.delivery-checker__result {
+  margin-top: var(--space-md);
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  animation: deliverySlideIn 0.3s ease;
+}
+
+.delivery-checker__result--success {
+  background: #f0faf2;
+  border: 1px solid #c8e6c9;
+}
+
+.delivery-checker__result--error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.delivery-result__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-dark-gray);
+  padding: 3px 0;
+}
+
+.delivery-result__row--location {
+  font-size: 14px;
+  margin-bottom: 6px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  color: var(--color-black);
+}
+
+.delivery-result__row--location svg {
+  color: var(--color-success);
+  flex-shrink: 0;
+}
+
+.delivery-result__row--error {
+  color: #dc2626;
+  font-weight: 500;
+}
+
+.delivery-result__row--error svg {
+  color: #dc2626;
+  flex-shrink: 0;
+}
+
+.delivery-result__row--cod {
+  font-size: 12px;
+  color: var(--color-gray);
+  margin-top: 4px;
+}
+
+.delivery-result__row--hint {
+  font-size: 12px;
+  color: var(--color-accent);
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.delivery-result__label {
+  color: var(--color-gray);
+}
+
+.delivery-result__value {
+  font-weight: 600;
+  color: var(--color-dark-gray);
+  margin-left: auto;
+}
+
+.delivery-result__value--free {
+  color: var(--color-success);
+  font-weight: 700;
+}
+
+@keyframes deliverySlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Compact mode (for cart sidebar) */
+.delivery-checker--compact {
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+}
+
+.delivery-checker--compact .delivery-checker__input {
+  height: 38px;
+  font-size: 13px;
+}
+
+.delivery-checker--compact .delivery-checker__btn {
+  height: 38px;
+  padding: 0 14px;
+  font-size: 12px;
+}
+
+.delivery-checker--compact .delivery-checker__result {
+  padding: 10px 12px;
+}
+
+.delivery-checker--compact .delivery-result__row {
+  font-size: 12px;
+}

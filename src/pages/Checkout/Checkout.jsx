@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
+import { calculateDelivery } from '../../utils/shippingConfig';
 import './Checkout.css';
 
 export default function Checkout() {
@@ -88,10 +89,24 @@ export default function Checkout() {
         })
       });
 
-      const data = await response.json();
+      let data;
+      try {
+        data = await response.json();
+      } catch (err) {
+        throw new Error('Server unreachable or returned invalid response.');
+      }
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to create order');
+        throw new Error(data?.error || 'Failed to create order');
+      }
+
+      // If we are using a dummy key, bypass Razorpay SDK and simulate success
+      if (data.keyId === 'rzp_test_dummy') {
+        setTimeout(() => {
+          clearCart();
+          navigate(`/order/${data.orderId}`);
+        }, 1500);
+        return;
       }
 
       // Load Razorpay SDK
@@ -145,8 +160,6 @@ export default function Checkout() {
       const rzp = new window.Razorpay(options);
       rzp.on('payment.failed', function (response) {
         setServerError(`Payment failed: ${response.error.description}`);
-        // Optionally redirect to the failed order page if you want them to see the FAILED state
-        // navigate(`/order/${data.orderId}`);
       });
       rzp.open();
 
@@ -158,9 +171,23 @@ export default function Checkout() {
   };
 
   // Use authoritative totals from server validation if available (to ensure UI matches backend exactly)
-  const displayTotal = serverValidation?.total ?? total;
+  const baseTotal = serverValidation?.total ?? total;
   const displaySubtotal = serverValidation?.subtotal ?? subtotal;
   const displayDiscount = serverValidation?.discount ?? discount;
+
+  // Calculate delivery if we have a full pin code
+  let deliveryCharge = 120;
+  let deliveryStatus = '₹120';
+  let deliveryError = null;
+
+  if (customer.pinCode && customer.pinCode.length === 6) {
+    const dInfo = calculateDelivery(customer.pinCode, baseTotal);
+    if (!dInfo.serviceable) {
+      deliveryError = dInfo.error;
+    }
+  }
+
+  const displayTotal = baseTotal + deliveryCharge;
 
   return (
     <div className="checkout-page page-enter">
@@ -324,9 +351,15 @@ export default function Checkout() {
                 )}
                 
                 <div className="checkout-row">
-                  <span>Delivery</span>
-                  <span className="checkout-free">FREE</span>
+                  <span>Delivery Charge</span>
+                  <span>₹120</span>
                 </div>
+                
+                {deliveryError && (
+                  <div className="checkout-error-text" style={{fontSize: '13px', color: '#dc2626', textAlign: 'right', marginTop: '-8px', marginBottom: '8px'}}>
+                    {deliveryError}
+                  </div>
+                )}
                 
                 <div className="checkout-final-total">
                   <span>Total to Pay</span>

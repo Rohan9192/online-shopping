@@ -26,7 +26,7 @@ const categoryMeta = {
   jeans: {
     title: 'Jeans',
     description: 'Handcrafted denim for the modern wardrobe',
-    promo: '🔥 BUY ANY 3 JEANS FOR ₹1,000',
+    promo: '🔥 ₹1700 FOR 3 JEANS',
   },
   ...subCategoryMeta,
 };
@@ -70,6 +70,24 @@ export default function Category() {
 
       {/* Products */}
       <div className="container">
+        {slug === 'jeans' && (
+          <div style={{
+            background: '#111', 
+            color: '#fff', 
+            padding: '24px', 
+            borderRadius: '8px', 
+            marginBottom: '32px',
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '12px'
+          }}>
+            <h2 style={{ fontSize: '24px', margin: 0, fontFamily: 'var(--font-display)', letterSpacing: '1px' }}>👖 ₹1700 FOR 3 JEANS</h2>
+            <p style={{ margin: 0, color: '#aaa', fontSize: '14px' }}>Mix & Match • Eligible Jeans Only</p>
+            <a href="#product-grid-jeans" className="btn btn-primary btn-sm" style={{ marginTop: '8px' }}>SHOP THE OFFER</a>
+          </div>
+        )}
         <div className="category-header">
           <p className="category-results">{products.length} products</p>
         </div>
@@ -118,7 +136,7 @@ export function Offers() {
       <div className="category-hero category-hero--sale" id="offers-hero">
         <div className="container">
           <h1 className="category-hero__title">🔥 LIMITED TIME SALE</h1>
-          <p className="category-hero__desc">3 T-Shirts for ₹500 | 3 Jeans for ₹1,000</p>
+          <p className="category-hero__desc">3 T-Shirts for ₹500 | ₹1700 FOR 3 JEANS</p>
         </div>
       </div>
       <div className="offers-promos container">
@@ -132,7 +150,7 @@ export function Offers() {
         <div className="offer-promo offer-promo--jeans">
           <span className="offer-promo__emoji">👖</span>
           <div>
-            <h3>3 Jeans for ₹1,000</h3>
+            <h3>₹1700 FOR 3 JEANS</h3>
             <p>Pick any three jeans from the collection</p>
           </div>
         </div>

@@ -17,6 +17,7 @@ import rateLimit from 'express-rate-limit';
 import { db } from './db.js';
 import adminRoutes from './adminRoutes.js';
 import { calculateCart } from '../src/utils/promotionEngine.js';
+import { calculateDelivery } from '../src/utils/shippingConfig.js';
 
 dotenv.config();
 
@@ -221,8 +222,13 @@ app.post('/api/checkout/create-order', async (req, res) => {
     // Authoritative calculation using dynamic offers
     const calculation = calculateCart(resolvedItems, db.offers);
     
-    // Delivery fee is FREE as per requirements (or 0)
-    const deliveryFee = 0;
+    // Authoritative delivery calculation
+    const dInfo = calculateDelivery(customer.pinCode, calculation.total);
+    if (!dInfo.serviceable) {
+      return res.status(400).json({ error: dInfo.error || 'Delivery not available to this PIN code' });
+    }
+    
+    const deliveryFee = dInfo.charge;
     const finalTotal = calculation.total + deliveryFee;
 
     // Create Razorpay order (Mock if dummy key is used)
