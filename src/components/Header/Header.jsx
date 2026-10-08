@@ -49,8 +49,8 @@ export default function Header() {
 
         <div className="header__inner container">
           {/* Mobile Menu Toggle */}
-          <button 
-            className="header__hamburger" 
+          <button
+            className="header__hamburger"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
             id="mobile-menu-toggle"
@@ -63,18 +63,18 @@ export default function Header() {
           {/* Logo */}
           <Link to="/" className="header__logo" id="logo-link">
             <span className="logo-text">Style</span>
-            <span className="logo-accent">Hub</span>
+            <span className="logo-accent">Hub123</span>
           </Link>
 
           {/* Collection Switcher */}
           <div className="collection-switcher">
-            <button 
+            <button
               className={`switcher-btn ${collection === 'MEN' ? 'active' : ''}`}
               onClick={() => { setCollection('MEN'); if (location.pathname !== '/') window.location.href = '/'; }}
             >
               MEN
             </button>
-            <button 
+            <button
               className={`switcher-btn ${collection === 'WOMEN' ? 'active' : ''}`}
               onClick={() => { setCollection('WOMEN'); if (location.pathname !== '/') window.location.href = '/'; }}
             >
@@ -98,37 +98,37 @@ export default function Header() {
           {/* Actions */}
           <div className="header__actions">
             {/* Visual Search */}
-            <button 
-              className="header__icon-btn" 
+            <button
+              className="header__icon-btn"
               onClick={() => setVisualSearchOpen(true)}
               aria-label="Visual Search"
               title="Visual Search"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                <circle cx="8.5" cy="8.5" r="1.5"/>
-                <polyline points="21 15 16 10 5 21"/>
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <polyline points="21 15 16 10 5 21" />
               </svg>
             </button>
 
             {/* Search */}
-            <button 
-              className="header__icon-btn" 
+            <button
+              className="header__icon-btn"
               onClick={() => setSearchOpen(!searchOpen)}
               aria-label="Search"
               title="Search"
               id="search-toggle"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8"/>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
             </button>
 
             {/* Compare */}
             <Link to="/compare" className="header__icon-btn" aria-label="Compare" title="Compare" id="compare-link">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
+                <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" />
               </svg>
               {compareItems.length > 0 && (
                 <span className="header__cart-badge">{compareItems.length}</span>
@@ -136,32 +136,32 @@ export default function Header() {
             </Link>
 
             {/* Wishlist */}
-            <Link to="/" className="header__icon-btn" aria-label="Wishlist" title="Wishlist" id="wishlist-link">
+            <Link to="/wishlist" className="header__icon-btn" aria-label="Wishlist" title="Wishlist" id="wishlist-link">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
               </svg>
             </Link>
 
             {/* Account */}
             <Link to="/account" className="header__icon-btn" aria-label="Account" title="Account" id="account-link">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
               </svg>
             </Link>
 
             {/* Cart */}
-            <button 
-              className="header__icon-btn header__cart-btn" 
+            <button
+              className="header__icon-btn header__cart-btn"
               onClick={toggleCart}
               aria-label={`Cart with ${totalItems} items`}
               title="Cart"
               id="cart-toggle"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-                <line x1="3" y1="6" x2="21" y2="6"/>
-                <path d="M16 10a4 4 0 0 1-8 0"/>
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
               </svg>
               {totalItems > 0 && (
                 <span className="header__cart-count" id="cart-count">{totalItems}</span>
@@ -176,8 +176,8 @@ export default function Header() {
             <div className="container">
               <div className="search-bar">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="11" cy="11" r="8"/>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
                 </svg>
                 <input
                   type="text"
@@ -215,14 +215,14 @@ export default function Header() {
             </Link>
           ))}
           <div className="mobile-collection-switcher" style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-            <button 
+            <button
               className={`btn ${collection === 'MEN' ? 'btn-primary' : 'btn-secondary'}`}
               onClick={() => { setCollection('MEN'); setMobileOpen(false); if (location.pathname !== '/') window.location.href = '/'; }}
               style={{ flex: 1 }}
             >
               MEN
             </button>
-            <button 
+            <button
               className={`btn ${collection === 'WOMEN' ? 'btn-primary' : 'btn-secondary'}`}
               onClick={() => { setCollection('WOMEN'); setMobileOpen(false); if (location.pathname !== '/') window.location.href = '/'; }}
               style={{ flex: 1 }}
@@ -236,7 +236,7 @@ export default function Header() {
           <p>🔥 ₹1700 FOR 3 JEANS</p>
         </div>
       </nav>
-      
+
       <VisualSearchModal
         isOpen={visualSearchOpen}
         onClose={() => setVisualSearchOpen(false)}
