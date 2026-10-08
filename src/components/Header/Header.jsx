@@ -63,7 +63,7 @@ export default function Header() {
           {/* Logo */}
           <Link to="/" className="header__logo" id="logo-link">
             <span className="logo-text">Style</span>
-            <span className="logo-accent">Hub123</span>
+            <span className="logo-accent">Hub</span>
           </Link>
 
           {/* Collection Switcher */}
