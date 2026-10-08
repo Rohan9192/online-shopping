@@ -16,7 +16,7 @@ export default function GiftCards() {
   const handleAddToCart = (e) => {
     e.preventDefault();
     if (!giftCardProduct) return;
-    
+
     // Create a modified copy of the product with the selected price
     const customGiftCard = {
       ...giftCardProduct,
@@ -24,7 +24,7 @@ export default function GiftCards() {
       name: `StyleHub E-Gift Card (₹${amount})`,
       cartItemId: `gift-card-${amount}-${Date.now()}`
     };
-    
+
     addToCart(customGiftCard, `₹${amount}`, 'Digital');
     navigate('/cart');
   };
@@ -43,12 +43,12 @@ export default function GiftCards() {
         <div className="gift-cards-form">
           <h1>Give the Gift of Style</h1>
           <p className="gift-cards-desc">Perfect for any occasion. Delivered instantly via email with your personal message.</p>
-          
+
           <div className="form-section">
             <h3>Select Amount</h3>
             <div className="amount-grid">
               {[500, 1000, 2000, 5000].map(val => (
-                <button 
+                <button
                   key={val}
                   className={`amount-btn ${amount === val ? 'active' : ''}`}
                   onClick={() => setAmount(val)}
@@ -62,19 +62,19 @@ export default function GiftCards() {
           <form onSubmit={handleAddToCart}>
             <div className="form-group">
               <label>Recipient's Email</label>
-              <input 
-                type="email" 
-                required 
+              <input
+                type="email"
+                required
                 placeholder="friend@example.com"
                 value={recipientEmail}
                 onChange={e => setRecipientEmail(e.target.value)}
               />
             </div>
-            
+
             <div className="form-group">
               <label>Personal Message (Optional)</label>
-              <textarea 
-                rows="3" 
+              <textarea
+                rows="3"
                 placeholder="Happy Birthday! Buy yourself something nice."
                 value={message}
                 onChange={e => setMessage(e.target.value)}

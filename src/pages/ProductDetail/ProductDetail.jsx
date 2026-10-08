@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { useCompare } from '../../context/CompareContext';
@@ -7,6 +7,7 @@ import { getProductImage } from '../../utils/productImages';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import DeliveryChecker from '../../components/DeliveryChecker/DeliveryChecker';
 import SizeRecommendationModal from '../../components/SizeRecommendationModal/SizeRecommendationModal';
+import Recommendations from '../../components/features/Recommendations';
 import './ProductDetail.css';
 
 export default function ProductDetail() {
@@ -33,6 +34,40 @@ export default function ProductDetail() {
   const [sizeError, setSizeError] = useState(false);
   const [colorError, setColorError] = useState(false);
   const [isSizeModalOpen, setIsSizeModalOpen] = useState(false);
+
+  const [activeThumbIndex, setActiveThumbIndex] = useState(0);
+  const [is360Active, setIs360Active] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+
+  const handleDragStart = (e) => {
+    setIsDragging(true);
+    setStartX(e.type.includes('mouse') ? e.pageX : e.touches[0].pageX);
+  };
+
+  const handleDrag = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+    const diff = currentX - startX;
+    setDragOffset(prev => prev + diff);
+    setStartX(currentX);
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+  };
+
+  useEffect(() => {
+    const stopDrag = () => setIsDragging(false);
+    window.addEventListener('mouseup', stopDrag);
+    window.addEventListener('touchend', stopDrag);
+    return () => {
+      window.removeEventListener('mouseup', stopDrag);
+      window.removeEventListener('touchend', stopDrag);
+    };
+  }, []);
 
   if (!product) {
     return (
@@ -79,6 +114,34 @@ export default function ProductDetail() {
     }
     return isValid;
   };
+
+  // Return the actual image source for different angles
+  const getAngleImage = (index) => {
+    if (index === 0) return imageSrc; // Front
+    
+    if (imageSrc.includes('.jpg')) {
+      if (index === 1) return imageSrc.replace('.jpg', '-back.jpg');
+      if (index === 2) return imageSrc.replace('.jpg', '-side.jpg');
+      if (index === 3) return imageSrc.replace('.jpg', '-side.jpg'); // Mirror the side view or reuse
+    }
+
+    // Fallbacks if not a standard jpg
+    if (index === 1) return `https://placehold.co/600x800/f5f5f5/a1a1aa?text=${encodeURIComponent('BACK VIEW\n' + product.name)}`;
+    if (index === 2 || index === 3) return `https://placehold.co/600x800/f5f5f5/a1a1aa?text=${encodeURIComponent('SIDE VIEW\n' + product.name)}`;
+    return imageSrc;
+  };
+
+  const handleImageError = (e, index) => {
+    e.target.onerror = null; // Prevent infinite loops
+    let text = 'FRONT VIEW';
+    if (index === 1) text = 'BACK VIEW';
+    if (index === 2 || index === 3) text = 'SIDE VIEW';
+    e.target.src = `https://placehold.co/600x800/f5f5f5/a1a1aa?text=${encodeURIComponent(text + '\n' + product.name)}`;
+  };
+
+  // Calculate the current frame for 360 viewer based on drag
+  const frameStep = Math.floor(dragOffset / 60);
+  const current360FrameIndex = ((frameStep % 4) + 4) % 4; // 0, 1, 2, 3
 
   const handleAddToCart = () => {
     if (!validateSelection()) return;
@@ -155,17 +218,74 @@ export default function ProductDetail() {
         <div className="pdp-layout">
           {/* Image Gallery */}
           <div className="pdp-gallery" id="pdp-gallery">
-            <div className="pdp-gallery__main">
-              <img src={imageSrc} alt={product.name} className="pdp-gallery__image" />
-              {product.badge && (
-                <span className="pdp-gallery__badge">{product.badge}</span>
+            <div className="pdp-gallery__main" style={{ position: 'relative', overflow: 'hidden' }}>
+              {!is360Active ? (
+                <>
+                  <img 
+                    src={getAngleImage(activeThumbIndex)} 
+                    alt={product.name} 
+                    className="pdp-gallery__image" 
+                    style={{ transition: 'opacity 0.3s ease' }} 
+                    onError={(e) => handleImageError(e, activeThumbIndex)}
+                  />
+                  {product.badge && (
+                    <span className="pdp-gallery__badge" style={{ zIndex: 10 }}>{product.badge}</span>
+                  )}
+                  <button 
+                    className="btn btn-outline btn-sm" 
+                    style={{ position: 'absolute', bottom: '16px', right: '16px', background: 'white', zIndex: 10, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                    onClick={() => setIs360Active(true)}
+                  >
+                    🔄 360° View
+                  </button>
+                </>
+              ) : (
+                <div 
+                  style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: isDragging ? 'grabbing' : 'grab', background: '#f5f5f5' }}
+                  onMouseDown={handleDragStart}
+                  onMouseMove={handleDrag}
+                  onTouchStart={handleDragStart}
+                  onTouchMove={handleDrag}
+                >
+                  <img 
+                    src={getAngleImage(current360FrameIndex)} 
+                    alt="360 view frame" 
+                    style={{ width: '80%', height: 'auto', userSelect: 'none', pointerEvents: 'none', objectFit: 'contain' }} 
+                    onError={(e) => handleImageError(e, current360FrameIndex)}
+                  />
+                  <div style={{ position: 'absolute', bottom: '16px', width: '100%', textAlign: 'center', pointerEvents: 'none' }}>
+                    <span style={{ background: 'rgba(0,0,0,0.6)', color: 'white', padding: '4px 12px', borderRadius: '16px', fontSize: '12px' }}>
+                      Drag to rotate
+                    </span>
+                  </div>
+                  <button 
+                    className="btn btn-primary btn-sm" 
+                    style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 10 }}
+                    onClick={(e) => { e.stopPropagation(); setIs360Active(false); }}
+                  >
+                    Exit 360
+                  </button>
+                </div>
               )}
             </div>
             {/* Thumbnail strip */}
             <div className="pdp-gallery__thumbs">
               {[0, 1, 2].map(i => (
-                <div key={i} className={`pdp-gallery__thumb ${i === 0 ? 'active' : ''}`}>
-                  <img src={imageSrc} alt={`${product.name} view ${i + 1}`} />
+                <div 
+                  key={i} 
+                  className={`pdp-gallery__thumb ${activeThumbIndex === i && !is360Active ? 'active' : ''}`}
+                  onClick={() => { setActiveThumbIndex(i); setIs360Active(false); }}
+                  style={{ cursor: 'pointer', overflow: 'hidden', position: 'relative' }}
+                >
+                  <img 
+                    src={getAngleImage(i)} 
+                    alt={`${product.name} view ${i + 1}`} 
+                    style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover' }}
+                    onError={(e) => handleImageError(e, i)}
+                  />
+                  <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', background: 'rgba(255,255,255,0.9)', fontSize: '10px', textAlign: 'center', fontWeight: 'bold', padding: '4px 0' }}>
+                    {i === 0 ? 'FRONT' : i === 1 ? 'BACK' : 'SIDE'}
+                  </div>
                 </div>
               ))}
             </div>
@@ -194,6 +314,11 @@ export default function ProductDetail() {
                   <span className="pdp-info__discount">-{discountPercent}% off</span>
                 </>
               )}
+            </div>
+            <div style={{ marginBottom: '16px' }}>
+              <button className="btn btn-outline btn-sm" onClick={() => alert('Price drop alert set!')} style={{ fontSize: '12px', padding: '4px 8px', borderColor: 'var(--color-border)', color: 'var(--color-text-light)' }}>
+                🔔 Notify Me If Price Drops
+              </button>
             </div>
 
             {/* Description */}
@@ -344,6 +469,9 @@ export default function ProductDetail() {
             </div>
           </section>
         )}
+
+        <Recommendations title="You May Also Like" type="similar" currentProductId={product.id} limit={4} />
+        <Recommendations title="Complete Your Look" type="complete-look" currentProductId={product.id} limit={4} />
       </div>
       
       <SizeRecommendationModal 

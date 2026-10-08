@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { getProductImage } from '../../utils/productImages';
-import { getProductById } from '../../data/products';
+import { getProductById, products } from '../../data/products';
 import './CartDrawer.css';
 
 export default function CartDrawer() {
@@ -128,6 +128,21 @@ export default function CartDrawer() {
                   </div>
                 );
               })}
+            </div>
+
+            {/* Upselling & Cross-Selling */}
+            <div className="cart-drawer__upsell" style={{ padding: '16px', background: 'var(--color-off-white)', borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)' }}>
+              <h4 style={{ fontSize: '0.9rem', marginBottom: '12px' }}>You May Also Like</h4>
+              <div style={{ display: 'flex', gap: '12px', overflowX: 'auto', paddingBottom: '8px' }}>
+                {products.slice(0, 3).map(p => (
+                  <div key={p.id} style={{ minWidth: '100px', background: 'white', borderRadius: '8px', padding: '8px', textAlign: 'center' }}>
+                    <img src={p.images ? p.images[0] : (p.image || 'https://via.placeholder.com/100')} alt={p.name} style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '4px', marginBottom: '8px' }} />
+                    <div style={{ fontSize: '0.75rem', fontWeight: 'bold', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name}</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--color-primary)' }}>₹{p.price}</div>
+                    <button className="btn btn-outline btn-sm" style={{ padding: '2px 8px', fontSize: '0.7rem', marginTop: '4px', width: '100%' }}>Add</button>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Summary */}

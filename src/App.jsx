@@ -17,6 +17,8 @@ import Account from './pages/Account/Account';
 import Gallery from './pages/Gallery/Gallery';
 import GiftCards from './pages/GiftCards/GiftCards';
 import Policies from './pages/Policies/Policies';
+import WishlistPage from './pages/WishlistPage/WishlistPage';
+import VIP from './pages/VIP/VIP';
 
 // Admin imports
 import AdminLayout from './pages/Admin/AdminLayout';
@@ -57,6 +59,8 @@ function Storefront() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/gift-cards" element={<GiftCards />} />
           <Route path="/policies/:policyId" element={<Policies />} />
+          <Route path="/wishlist" element={<WishlistPage />} />
+          <Route path="/vip" element={<VIP />} />
         </Routes>
       </main>
       <Footer />

@@ -53,6 +53,66 @@ const POLICIES = {
         <p>If you subscribe to our "New Drop Notifications," we use your email solely to notify you of relevant product launches based on your preferences. You can unsubscribe at any time.</p>
       </>
     )
+  },
+  about: {
+    title: 'About StyleHub',
+    content: (
+      <>
+        <h3>Our Story</h3>
+        <p>StyleHub was founded with a simple mission: Premium fashion at unbeatable prices. We believe looking good shouldn't break the bank.</p>
+        <h3>Sustainability</h3>
+        <p>We are committed to ethical manufacturing and sustainable sourcing for all our materials.</p>
+      </>
+    )
+  },
+  faq: {
+    title: 'Frequently Asked Questions',
+    content: (
+      <>
+        <h3>How does the 3 for ₹500 offer work?</h3>
+        <p>Simply add any 3 eligible T-Shirts to your cart and the discount applies automatically. Mix and match sizes and colors!</p>
+        <h3>Do you ship internationally?</h3>
+        <p>Currently, we only ship within India. Stay tuned for international shipping updates!</p>
+      </>
+    )
+  },
+  contact: {
+    title: 'Contact Us',
+    content: (
+      <>
+        <h3>Get In Touch</h3>
+        <p>Email: support@stylehub.com</p>
+        <p>Phone: 1800-STYLE-HUB (Mon-Fri, 9am-6pm)</p>
+        <p>Address: StyleHub HQ, Fashion District, Mumbai, India</p>
+      </>
+    )
+  },
+  'size-guide': {
+    title: 'Size Guide',
+    content: (
+      <>
+        <h3>How to measure</h3>
+        <p>Use our interactive Find My Size tool on any product page for personalized recommendations based on your height, weight, and fit preference.</p>
+      </>
+    )
+  },
+  material: {
+    title: 'Material & Care',
+    content: (
+      <>
+        <h3>Care Instructions</h3>
+        <p>Machine wash cold with like colors. Tumble dry low. Do not bleach. Iron on low heat if needed.</p>
+      </>
+    )
+  },
+  tracking: {
+    title: 'Order Tracking',
+    content: (
+      <>
+        <h3>Track Your Order</h3>
+        <p>Once your order ships, you will receive an email with a tracking link. You can also track your order from your Account dashboard.</p>
+      </>
+    )
   }
 };
 

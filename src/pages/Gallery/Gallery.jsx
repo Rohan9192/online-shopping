@@ -38,9 +38,18 @@ export default function Gallery() {
           {MOCK_GALLERY.map(item => (
             <div key={item.id} className="gallery-item">
               <img src={item.img} alt={`Outfit by ${item.username}`} className="gallery-img" />
-              <div className="gallery-overlay">
-                <span className="gallery-username">{item.username}</span>
-                <span className="gallery-likes">♥ {item.likes}</span>
+              <div className="gallery-overlay" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                  <span className="gallery-username">{item.username}</span>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button className="btn btn-outline btn-sm" style={{ padding: '4px', borderColor: 'rgba(255,255,255,0.5)', color: 'white' }}>♥ {item.likes}</button>
+                    <button className="btn btn-outline btn-sm" style={{ padding: '4px', borderColor: 'rgba(255,255,255,0.5)', color: 'white' }}>🏷️ Save</button>
+                    <button className="btn btn-outline btn-sm" style={{ padding: '4px', borderColor: 'rgba(255,255,255,0.5)', color: 'white' }}>🔗 Share</button>
+                  </div>
+                </div>
+                <button className="btn btn-primary btn-sm btn-full" style={{ marginTop: 'auto', background: 'white', color: 'black' }}>
+                  Shop The Look
+                </button>
               </div>
             </div>
           ))}

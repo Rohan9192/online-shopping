@@ -12,6 +12,10 @@ import FindMyFit from '../../components/FindMyFit/FindMyFit';
 import DropSection from '../../components/DropSection/DropSection';
 import ColorFilter from '../../components/ColorFilter/ColorFilter';
 import CommunityLooks from '../../components/CommunityLooks/CommunityLooks';
+import ShopTheLook from '../../components/features/ShopTheLook';
+import StyleQuiz from '../../components/features/StyleQuiz';
+import Recommendations from '../../components/features/Recommendations';
+import NewDropAlerts from '../../components/features/NewDropAlerts';
 import { products, getNewArrivals } from '../../data/products';
 import { useCollection } from '../../context/CollectionContext';
 import './Home.css';
@@ -100,6 +104,9 @@ export default function Home() {
       {/* ===== 10. SHOP BY COLOR ===== */}
       <ColorFilter />
 
+      {/* ===== FEATURE: SHOP THE LOOK ===== */}
+      <ShopTheLook productsData={allProducts} />
+
       {/* ===== 11. HOW THEY WEAR IT ===== */}
       <CommunityLooks />
 
@@ -120,6 +127,12 @@ export default function Home() {
         viewAllLink="/category/tshirts"
         viewAllText="View All →"
       />
+
+      {/* ===== FEATURE: STYLE QUIZ ===== */}
+      <StyleQuiz />
+
+      {/* ===== FEATURE: PERSONALIZED RECOMMENDATIONS ===== */}
+      <Recommendations title="Your Style Picks" type="trending" limit={4} />
 
       {/* ===== EXTRAS ===== */}
       <StyleSection />
@@ -178,6 +191,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ===== FEATURE: NEW DROP ALERTS ===== */}
+      <NewDropAlerts />
     </div>
   );
 }

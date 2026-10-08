@@ -34,11 +34,17 @@ export default function Footer() {
 
           {/* Help & Trust */}
           <div className="footer__col">
-            <h4 className="footer__heading">Support</h4>
+            <h4 className="footer__heading">Support & Trust</h4>
+            <Link to="/policies/about" className="footer__link">About Us</Link>
+            <Link to="/policies/contact" className="footer__link">Contact Us</Link>
+            <Link to="/policies/faq" className="footer__link">FAQ</Link>
             <Link to="/policies/shipping" className="footer__link">Shipping Policy</Link>
             <Link to="/policies/returns" className="footer__link">Returns & Refunds</Link>
             <Link to="/policies/terms" className="footer__link">Terms of Service</Link>
             <Link to="/policies/privacy" className="footer__link">Privacy Policy</Link>
+            <Link to="/policies/tracking" className="footer__link">Order Tracking</Link>
+            <Link to="/policies/size-guide" className="footer__link">Size Guide</Link>
+            <Link to="/policies/material" className="footer__link">Material & Care</Link>
           </div>
 
           {/* Newsletter / Drop Notifications */}
